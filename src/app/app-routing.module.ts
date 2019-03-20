@@ -8,8 +8,8 @@ import {HeaderComponent} from "./header/header.component";
   ],
   imports: [
     RouterModule.forRoot([
-      {path: 'header', component: HeaderComponent},
-      {path: '**', redirectTo: 'header'}
+      // {path: 'header', component: HeaderComponent},
+      // {path: '**', redirectTo: 'header'}
     ])
   ],
   exports: [RouterModule],
