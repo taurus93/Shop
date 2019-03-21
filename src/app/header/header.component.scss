@@ -5,3 +5,29 @@ $primary-color: #333;
   font: 100% $font-stack;
   color: $primary-color;
 }
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  width: inherit;
+  max-width: 1200px;
+}
+.header-panel {
+  background: linear-gradient(-180deg,#f53d2d,#f63);
+  height: 119px;
+}
+.nav-bar-wrapper {
+}
+.txt {
+  color: #fff;
+}
+.truncate-text-custom {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.max-width-1 {
+  max-width: 128px;
+}
+.no-padding {
+  padding: unset;
+}
