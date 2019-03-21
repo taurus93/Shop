@@ -1,6 +1,7 @@
-$font-stack:    Helvetica, sans-serif;
+$font-stack: Helvetica, sans-serif;
 $primary-color: #333;
-
+$global-color: linear-gradient(-180deg,#f53d2d,#f63);
+//header
 .header {
   font: 100% $font-stack;
   color: $primary-color;
@@ -12,7 +13,7 @@ $primary-color: #333;
   max-width: 1200px;
 }
 .header-panel {
-  background: linear-gradient(-180deg,#f53d2d,#f63);
+  background: $global-color;
   height: 119px;
 }
 .nav-bar-wrapper {
@@ -31,3 +32,50 @@ $primary-color: #333;
 .no-padding {
   padding: unset;
 }
+.icon-color {
+  color: azure;
+}
+.border-right {
+  width: 1px;
+  height: 17px;
+  margin-left: 5px;
+  border: 1px solid azure;
+}
+.pi-shopping-cart {
+  font-size: 2.25em;
+}
+.size-icon-2 {
+  font-size: 2.25em;
+}
+.shop-icon {
+  height: 100%;
+  cursor: pointer;
+}
+.shop-icon .shop-name {
+  font-size: 25px;
+}
+.max-height {
+  height: 100%;
+}
+.global-search {
+  width: 100%;
+  height: 100%;
+  border: 2px solid azure;
+  border-radius: 4px;
+  padding-left: 10px;
+  outline: none;
+}
+.height-8 {
+  height: 80%;
+}
+.height-7 {
+  height: 70%;
+}
+.search-icon-wrapper {
+  background: $global-color;
+  margin-left: -3px;
+  height: 100%;
+  padding: 9px 0px 0px 21px;
+  border: 2px solid white;
+}
+
