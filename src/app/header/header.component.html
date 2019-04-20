@@ -25,12 +25,9 @@
         <i class="pi pi-question pi-question-circle icon-color" style="font-size: 1em"></i>
         <span class="txt">Trợ giúp</span>
       </div>
-      <div class="ui-g-3 truncate-text-custom">
-        <div class="ui-g-5 no-padding text-wrapper">
+      <div class="ui-g-4 truncate-text-custom">
+        <div class="ui-g-6 no-padding text-wrapper sign-in">
           <span class="txt">Đăng ký</span>
-        </div>
-        <div class="ui-g-1 no-padding">
-          <div class="border-right"></div>
         </div>
         <div class="ui-g-6 no-padding text-wrapper">
           <span class="txt">Đăng nhập</span>
@@ -39,7 +36,7 @@
     </div>
   </div>
   <div class="ui-g container header-with-search-wrapper">
-    <div class="ui-g-2 no-padding">
+    <div class="ui-g-2 height-100 no-padding">
       <div class="ui-g-8 shop-icon">
         <div class="ui-g-5">
           <i class="pi pi-home size-icon-2 icon-color"></i>
@@ -49,19 +46,59 @@
         </div>
       </div>
     </div>
-    <div class="ui-g-8">
-      <div class="ui-g-11 height-7 no-padding global-search-wrapper">
+    <div class="ui-g-8 height-100">
+      <div class="ui-g-11 height-100 no-padding global-search-wrapper">
         <input class="global-search" placeholder="Tìm thương hiệu, sản phẩm và tên shop" type="text">
       </div>
-      <div class="ui-g-1 height-7 no-padding search-icon-group">
+      <div class="ui-g-1 height-100 no-padding search-icon-group">
         <div class="search-icon-wrapper">
           <i class="pi pi-search icon-color"></i>
         </div>
       </div>
     </div>
-    <div class="ui-g-2">
+    <div class="ui-g-2 height-100">
       <i class="pi pi-shopping-cart icon-color"></i>
     </div>
   </div>
+  <div class="ui-g container header-list-category">
+    <div class="height-4 no-padding category-wrapper">
+      <div class="element" *ngFor="let post of categories | async">
+        <span class="txt" [textContent]=post.categoryName></span>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<div id="demo" class="carousel slide" data-ride="carousel">-->
+
+  <!--&lt;!&ndash; Indicators &ndash;&gt;-->
+  <!--<ul class="carousel-indicators">-->
+    <!--<li data-target="#demo" data-slide-to="0" class="active"></li>-->
+    <!--<li data-target="#demo" data-slide-to="1"></li>-->
+    <!--<li data-target="#demo" data-slide-to="2"></li>-->
+  <!--</ul>-->
+
+  <!--&lt;!&ndash; The slideshow &ndash;&gt;-->
+  <!--<div class="carousel-inner">-->
+    <!--<div class="carousel-item active">-->
+      <!--<img src="la.jpg" alt="Los Angeles" width="1100" height="500">-->
+    <!--</div>-->
+    <!--<div class="carousel-item">-->
+      <!--<img src="chicago.jpg" alt="Chicago" width="1100" height="500">-->
+    <!--</div>-->
+    <!--<div class="carousel-item">-->
+      <!--<img src="ny.jpg" alt="New York" width="1100" height="500">-->
+    <!--</div>-->
+  <!--</div>-->
+
+  <!--&lt;!&ndash; Left and right controls &ndash;&gt;-->
+  <!--<a class="carousel-control-prev" href="#demo" data-slide="prev">-->
+    <!--<span class="carousel-control-prev-icon"></span>-->
+  <!--</a>-->
+  <!--<a class="carousel-control-next" href="#demo" data-slide="next">-->
+    <!--<span class="carousel-control-next-icon"></span>-->
+  <!--</a>-->
+<!--</div>-->
+<div class="ui-g container">
+  <p-galleria [images]="images" panelWidth="800" panelHeight="313" [showCaption]="true"></p-galleria>
 </div>
 <router-outlet></router-outlet>

@@ -4,8 +4,9 @@ import {CommonModule} from '@angular/common';
 import {HeaderRoutingModule} from './header-routing.module';
 import {HeaderComponent} from './header.component';
 import {TabMenuModule} from 'primeng/tabmenu';
-import {BrowserModule} from "@angular/platform-browser";
-import {AppComponent} from "../app.component";
+import {BrowserModule} from '@angular/platform-browser';
+import {AppComponent} from '../app.component';
+import {GalleriaModule} from 'primeng/galleria';
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -13,7 +14,8 @@ import {AppComponent} from "../app.component";
     CommonModule,
     BrowserModule,
     HeaderRoutingModule,
-    TabMenuModule
+    TabMenuModule,
+    GalleriaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
