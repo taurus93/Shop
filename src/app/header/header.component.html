@@ -68,37 +68,31 @@
     </div>
   </div>
 </div>
-<!--<div id="demo" class="carousel slide" data-ride="carousel">-->
-
-  <!--&lt;!&ndash; Indicators &ndash;&gt;-->
-  <!--<ul class="carousel-indicators">-->
-    <!--<li data-target="#demo" data-slide-to="0" class="active"></li>-->
-    <!--<li data-target="#demo" data-slide-to="1"></li>-->
-    <!--<li data-target="#demo" data-slide-to="2"></li>-->
-  <!--</ul>-->
-
-  <!--&lt;!&ndash; The slideshow &ndash;&gt;-->
-  <!--<div class="carousel-inner">-->
-    <!--<div class="carousel-item active">-->
-      <!--<img src="la.jpg" alt="Los Angeles" width="1100" height="500">-->
-    <!--</div>-->
-    <!--<div class="carousel-item">-->
-      <!--<img src="chicago.jpg" alt="Chicago" width="1100" height="500">-->
-    <!--</div>-->
-    <!--<div class="carousel-item">-->
-      <!--<img src="ny.jpg" alt="New York" width="1100" height="500">-->
+<div class="ui-g container">
+  <div class="ui-g-9">
+    <p-galleria [images]="images" panelWidth="800" panelHeight="313" [showCaption]="false"></p-galleria>
+  </div>
+  <div class="ui-g-3 img-panel-wrapper">
+    <img class="img" src="../assets/post1.jpg" alt="">
+    <img src="../assets/post2.jpg" alt="">
+    <div class="img-panel-2"></div>
+  </div>
+</div>
+<div class="ui-g container list-product">
+  <!--<div class="height-4 no-padding model-wrapper">-->
+    <!--<div class="element" *ngFor="let item of product | async">-->
+      <!--<span class="txt2" [textContent]=item.productDescription></span>-->
     <!--</div>-->
   <!--</div>-->
-
-  <!--&lt;!&ndash; Left and right controls &ndash;&gt;-->
-  <!--<a class="carousel-control-prev" href="#demo" data-slide="prev">-->
-    <!--<span class="carousel-control-prev-icon"></span>-->
-  <!--</a>-->
-  <!--<a class="carousel-control-next" href="#demo" data-slide="next">-->
-    <!--<span class="carousel-control-next-icon"></span>-->
-  <!--</a>-->
-<!--</div>-->
-<div class="ui-g container">
-  <p-galleria [images]="images" panelWidth="800" panelHeight="313" [showCaption]="true"></p-galleria>
+  <div class="height-4 no-padding category-wrapper">
+    <div class="element-product" *ngFor="let post of products | async">
+      <div class="element-img">
+        <img src="../assets/{{post.productPicture}}" alt="">
+      </div>
+      <div class="element-content">
+        <span class="txt2 truncate" [textContent]=post.productDescription></span>
+      </div>
+    </div>
+  </div>
 </div>
 <router-outlet></router-outlet>

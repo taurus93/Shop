@@ -7,6 +7,8 @@ import {TabMenuModule} from 'primeng/tabmenu';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from '../app.component';
 import {GalleriaModule} from 'primeng/galleria';
+import {DataViewModule} from 'primeng/dataview';
+import {CarouselModule} from 'primeng/carousel';
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -15,7 +17,9 @@ import {GalleriaModule} from 'primeng/galleria';
     BrowserModule,
     HeaderRoutingModule,
     TabMenuModule,
-    GalleriaModule
+    GalleriaModule,
+    DataViewModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

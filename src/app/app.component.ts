@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from 'primeng/api';
-import {Category} from './category/Category';
+import {Category} from './model/Category';
 import {CategoryService} from './category.service';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';

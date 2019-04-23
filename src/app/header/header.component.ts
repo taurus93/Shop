@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Category} from '../category/Category';
+import {Category} from '../model/Category';
 import {Observable} from 'rxjs';
+import {Product} from "../model/Product";
 
 @Component({
   selector: 'app-header',
@@ -12,8 +13,9 @@ import {Observable} from 'rxjs';
 export class HeaderComponent implements OnInit {
   items: MenuItem[];
   categories: Observable<Category[]>;
+  products: Observable<Product[]>;
   images: any[];
-  readonly ROOT_URL = 'http://localhost:8008/ShopeeRestService/dataService';
+  readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
 
   ngOnInit() {
     this.items = [
@@ -24,10 +26,11 @@ export class HeaderComponent implements OnInit {
       {label: 'Social', icon: 'fa fa-fw fa-twitter'}
     ];
     this.categories = this.getAllCategory();
+    this.products = this.getAllProduct();
     this.images = [];
-    this.images.push({source: 'src/assets/post1.jpg', alt: 'Description for Image 1', title: 'Title 1'});
-    this.images.push({source: 'src/assets/post2.jpg', alt: 'Description for Image 2', title: 'Title 2'});
-    this.images.push({source: 'src/assets/post3.jpg', alt: 'Description for Image 3', title: 'Title 3'});
+    this.images.push({source: '../assets/post1.jpg', alt: '', title: ''});
+    this.images.push({source: '../assets/post2.jpg', alt: '', title: ''});
+    this.images.push({source: '../assets/post3.jpg', alt: '', title: ''});
   }
 
   constructor(private http: HttpClient) {
@@ -36,7 +39,12 @@ export class HeaderComponent implements OnInit {
   getAllCategory(): Observable<Category[]> {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
-    return this.http.get<Category[]>(this.ROOT_URL + '/getAllCategory', {headers});
-    // return this.http.get(this.ROOT_URL + '/getAllCategory', { headers });
+    return this.http.get<Category[]>(this.ROOT_URL + 'category/getAllCategory', {headers});
+  }
+
+  getAllProduct(): Observable<Product[]> {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    return this.http.get<Product[]>(this.ROOT_URL + 'product/getAllProduct', {headers});
   }
 }
