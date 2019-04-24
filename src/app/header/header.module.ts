@@ -9,6 +9,8 @@ import {AppComponent} from '../app.component';
 import {GalleriaModule} from 'primeng/galleria';
 import {DataViewModule} from 'primeng/dataview';
 import {CarouselModule} from 'primeng/carousel';
+import {DialogModule} from 'primeng/dialog';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -19,7 +21,9 @@ import {CarouselModule} from 'primeng/carousel';
     TabMenuModule,
     GalleriaModule,
     DataViewModule,
-    CarouselModule
+    CarouselModule,
+    DialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

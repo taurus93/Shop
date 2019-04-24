@@ -36,6 +36,14 @@ export class HeaderComponent implements OnInit {
   constructor(private http: HttpClient) {
   }
 
+  //show dialog
+  display: boolean = false;
+
+  showDialog() {
+    this.display = true;
+  }
+
+  //get data
   getAllCategory(): Observable<Category[]> {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 

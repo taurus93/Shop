@@ -7,12 +7,10 @@ import {TabMenuModule} from 'primeng/tabmenu';
 import {HeaderModule} from "./header/header.module";
 import {BodyModule} from './body/body.module';
 import { HttpClientModule } from '@angular/common/http';
-import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ModalComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
