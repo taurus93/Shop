@@ -3,6 +3,9 @@ import {Observable} from 'rxjs';
 import {Product} from '../model/Product';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
+import * as $ from 'jquery';
+import {Order} from '../model/Order';
+import {formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-product',
@@ -14,7 +17,10 @@ export class ProductComponent implements OnInit {
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
   products: Observable<Product[]>;
   product: Product;
+  order: Order;
   productCode: string;
+  today = new Date();
+  jstoday = '';
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
@@ -24,6 +30,15 @@ export class ProductComponent implements OnInit {
       console.log(params.get('productCode'));
       this.productCode = params.get('productCode');
     });
+    this.jstoday = formatDate(this.today, 'yyyy-MM-dd', 'en-US', '+0530');
+    this.order = {
+      orderDate: this.jstoday,
+      quantity: 0,
+      totalPrice: 0,
+      productID_FK: 9,
+      userEmail_FK: 'lethanhtunglc@gmail.com',
+      paymentID_FK: 1
+    };
     this.getProduct();
   }
 
@@ -37,5 +52,14 @@ export class ProductComponent implements OnInit {
         }
       }
     );
+  }
+
+  insertProduct() {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+    // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
+    this.http.post(this.ROOT_URL + 'order/insertOrder', this.order).subscribe(
+      (data: any[]) => {
+        console.log(data);
+      });
   }
 }

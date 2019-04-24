@@ -6,6 +6,7 @@ import {ProductRoutingModule} from './product-routing.module';
 import {HeaderModule} from '../header/header.module';
 import {HeaderComponent} from '../header/header.component';
 import {BodyModule} from '../body/body.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ProductComponent],
@@ -13,7 +14,8 @@ import {BodyModule} from '../body/body.module';
     CommonModule,
     ProductRoutingModule,
     HeaderModule,
-    BodyModule
+    BodyModule,
+    FormsModule
   ],
   bootstrap: [AppComponent]
 })

@@ -9,11 +9,13 @@ import {BodyModule} from './body/body.module';
 import { HttpClientModule } from '@angular/common/http';
 import {ProductModule} from './product/product.module';
 import { HomeComponent } from './home/home.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

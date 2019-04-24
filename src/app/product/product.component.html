@@ -14,13 +14,18 @@
           <p>Ở đâu rẻ hơn, Shop xin hoàn tiền</p>
         </div>
       </div>
-    </div>
-    <div class="quantity">
-      <div class="sub"></div>
-      <div class="number">
-        <span class="txt2" [textContent]=order.quantity></span>
+      <div class="quantity">
+        <div class="txt2">
+          <span>Số Lượng</span>
+        </div>
+        <div class="number">
+          <input type="number" [(ngModel)]="order.quantity" class="form-control" id="quantity">
+        </div>
       </div>
-      <div class="add"></div>
+      <div class="quantity">
+        <button type="button" (click)="insertProduct()" class="btn btn-primary">Thêm vào giỏ hàng</button>
+        <button type="button" class="btn btn-warning">Mua ngay</button>
+      </div>
     </div>
   </div>
 </div>
