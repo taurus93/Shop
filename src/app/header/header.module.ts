@@ -10,7 +10,9 @@ import {GalleriaModule} from 'primeng/galleria';
 import {DataViewModule} from 'primeng/dataview';
 import {CarouselModule} from 'primeng/carousel';
 import {DialogModule} from 'primeng/dialog';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import {BodyModule} from '../body/body.module';
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -23,10 +25,15 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     DataViewModule,
     CarouselModule,
     DialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    BodyModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    HeaderComponent
+  ]
 })
 export class HeaderModule {
 }

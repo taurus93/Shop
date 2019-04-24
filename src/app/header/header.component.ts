@@ -3,7 +3,8 @@ import {MenuItem} from 'primeng/api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Category} from '../model/Category';
 import {Observable} from 'rxjs';
-import {Product} from "../model/Product";
+import {Product} from '../model/Product';
+import {User} from '../model/User';
 
 @Component({
   selector: 'app-header',
@@ -14,8 +15,13 @@ export class HeaderComponent implements OnInit {
   items: MenuItem[];
   categories: Observable<Category[]>;
   products: Observable<Product[]>;
+  users: Observable<User[]>;
   images: any[];
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
+  display = false;
+  user: User;
+  userTmp: User;
+  doLogin: boolean;
 
   ngOnInit() {
     this.items = [
@@ -31,19 +37,16 @@ export class HeaderComponent implements OnInit {
     this.images.push({source: '../assets/post1.jpg', alt: '', title: ''});
     this.images.push({source: '../assets/post2.jpg', alt: '', title: ''});
     this.images.push({source: '../assets/post3.jpg', alt: '', title: ''});
+    this.user = {
+      userName: '',
+      userEmail: '',
+      password: ''
+    };
   }
 
   constructor(private http: HttpClient) {
   }
 
-  //show dialog
-  display: boolean = false;
-
-  showDialog() {
-    this.display = true;
-  }
-
-  //get data
   getAllCategory(): Observable<Category[]> {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
@@ -55,4 +58,44 @@ export class HeaderComponent implements OnInit {
 
     return this.http.get<Product[]>(this.ROOT_URL + 'product/getAllProduct', {headers});
   }
+
+
+  // login
+  showDialog() {
+    this.display = true;
+  }
+
+  createUser(): void {
+    console.log(this.user);
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
+    this.http.post(this.ROOT_URL + 'user/insertUser', this.user).subscribe(
+      (data: any[]) => {
+        console.log(data);
+      });
+  }
+
+  login() {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    this.http.get<any[]>(this.ROOT_URL + 'user/getUserByUserEmail?userEmail=' + this.user.userEmail, {headers}).subscribe(
+      (data: any[]) => {
+        if (data.length) {
+          this.userTmp = data[0];
+          this.doLogin = true;
+        } else {
+          this.doLogin = false;
+        }
+      }
+    );
+  }
+
+  // login
+
+  // product
+  selectProduct() {
+
+  }
+  // product
 }

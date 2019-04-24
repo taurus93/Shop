@@ -1,0 +1,26 @@
+<app-header></app-header>
+<div class="wrapper">
+  <div class="ui-g container">
+    <div class="element-img ui-g-6">
+      <img src="../assets/{{product.productPicture}}" alt="">
+    </div>
+    <div class="element-content ui-g-5">
+      <div class="description">
+        <span class="txt2" [textContent]=product.productDescription></span>
+      </div>
+      <div>
+        <div class="jumbotron height-5 no-padding">
+          <span class="txt2" [textContent]=product.productPrice></span>
+          <p>Ở đâu rẻ hơn, Shop xin hoàn tiền</p>
+        </div>
+      </div>
+    </div>
+    <div class="quantity">
+      <div class="sub"></div>
+      <div class="number">
+        <span class="txt2" [textContent]=order.quantity></span>
+      </div>
+      <div class="add"></div>
+    </div>
+  </div>
+</div>
