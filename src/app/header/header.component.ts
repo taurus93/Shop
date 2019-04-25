@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Category} from '../model/Category';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {Product} from '../model/Product';
 import {User} from '../model/User';
+import {AuthenticationService} from '../service/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +23,9 @@ export class HeaderComponent implements OnInit {
   user: User;
   userTmp: User;
   doLogin: boolean;
+  currentUser: User;
+  currentUserSubscription: Subscription;
+  private currentUserSubject: BehaviorSubject<User>;
 
   ngOnInit() {
     this.items = [
@@ -44,7 +48,10 @@ export class HeaderComponent implements OnInit {
     };
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
+    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
   getAllCategory(): Observable<Category[]> {
@@ -79,16 +86,22 @@ export class HeaderComponent implements OnInit {
   login() {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
-    this.http.get<any[]>(this.ROOT_URL + 'user/getUserByUserEmail?userEmail=' + this.user.userEmail, {headers}).subscribe(
+    this.http.get<any[]>(this.ROOT_URL + 'user/authenticate?userEmail=' + this.user.userEmail
+      + '&password=' + this.user.password, {headers})
+      .subscribe(
       (data: any[]) => {
         if (data.length) {
           this.userTmp = data[0];
           this.doLogin = true;
+          localStorage.setItem('currentUser', JSON.stringify(this.userTmp));
+          // this.currentUserSubject.next(this.userTmp);
         } else {
           this.doLogin = false;
         }
       }
     );
+    // this.authenticationService.login(this.user.userEmail, this.user.password);
+    // this.doLogin = true;
   }
 
   // login
