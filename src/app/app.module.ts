@@ -10,12 +10,14 @@ import { HttpClientModule } from '@angular/common/http';
 import {ProductModule} from './product/product.module';
 import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
+import { FactureComponent } from './facture/facture.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CartComponent
+    CartComponent,
+    FactureComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 export interface Order {
+  orderCode: string;
   orderDate: string;
   quantity: number;
   totalPrice: number;

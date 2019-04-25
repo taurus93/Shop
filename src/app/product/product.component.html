@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="wrapper">
+<div class="wrapper" *ngIf="currentUser">
   <div class="ui-g container">
     <div class="element-img ui-g-6">
       <img src="../assets/{{product.productPicture}}" alt="">
@@ -11,6 +11,7 @@
       <div>
         <div class="jumbotron height-5 no-padding">
           <span class="txt2" [textContent]=product.productPrice></span>
+          <span class="txt2"> đ</span>
           <p>Ở đâu rẻ hơn, Shop xin hoàn tiền</p>
         </div>
       </div>
@@ -24,7 +25,7 @@
       </div>
       <div class="quantity">
         <button type="button" (click)="insertProduct()" class="btn btn-primary">Thêm vào giỏ hàng</button>
-        <button type="button" class="btn btn-warning">Mua ngay</button>
+        <button type="button" class="btn btn-warning" (click)="createFacture()" [routerLink]="['/facture']">Mua ngay</button>
       </div>
     </div>
   </div>

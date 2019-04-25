@@ -141,7 +141,7 @@ $global-color: linear-gradient(-180deg,#f53d2d,#f63);
   height: 200px;
 }
 .element-product {
-  max-width: 200px;
+  max-width: 185px;
   float: left;
   margin-right: 10px;
 }
@@ -155,4 +155,7 @@ $global-color: linear-gradient(-180deg,#f53d2d,#f63);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+img {
+  width: 100% !important;
 }

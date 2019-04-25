@@ -4,6 +4,7 @@ import {HeaderComponent} from './header/header.component';
 import {ProductComponent} from './product/product.component';
 import {HomeComponent} from './home/home.component';
 import {CartComponent} from './cart/cart.component';
+import {FactureComponent} from './facture/facture.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import {CartComponent} from './cart/cart.component';
       {path: 'header', component: HeaderComponent},
       {path: 'home', component: HomeComponent},
       {path: 'cart', component: CartComponent},
+      {path: 'facture', component: FactureComponent},
       {
         path: 'product/:productCode',
         component: ProductComponent
