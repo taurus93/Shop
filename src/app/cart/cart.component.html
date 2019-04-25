@@ -1,3 +1,26 @@
-<p>
-  cart works!
-</p>
+<app-header></app-header>
+<div class="ui-g container list-product">
+  <!--<div class="height-4 no-padding model-wrapper">-->
+  <!--<div class="element" *ngFor="let item of product | async">-->
+  <!--<span class="txt2" [textContent]=item.productDescription></span>-->
+  <!--</div>-->
+  <!--</div>-->
+  <div class="ui-g-12 height-4 category-wrapper">
+    <div class="element-product cursor-pointer" *ngFor="let post of orders | async">
+      <div class="element-img">
+        <img src="../assets/{{post.productPicture}}" alt="">
+      </div>
+      <div class="element-content">
+        <span class="txt2" [textContent]=post.productDescription></span>
+      </div>
+      <div class="element-content">
+        <span class="txt2">Số lượng: </span>
+        <span class="txt2" [textContent]=post.quantity></span>
+      </div>
+      <div class="element-content">
+        <span class="txt2" [textContent]=post.totalPrice></span>
+        <span class="txt2"> đ</span>
+      </div>
+    </div>
+  </div>
+</div>

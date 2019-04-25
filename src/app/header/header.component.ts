@@ -84,31 +84,11 @@ export class HeaderComponent implements OnInit {
   }
 
   login() {
-    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
-
-    this.http.get<any[]>(this.ROOT_URL + 'user/authenticate?userEmail=' + this.user.userEmail
-      + '&password=' + this.user.password, {headers})
-      .subscribe(
-      (data: any[]) => {
-        if (data.length) {
-          this.userTmp = data[0];
-          this.doLogin = true;
-          localStorage.setItem('currentUser', JSON.stringify(this.userTmp));
-          // this.currentUserSubject.next(this.userTmp);
-        } else {
-          this.doLogin = false;
-        }
-      }
-    );
-    // this.authenticationService.login(this.user.userEmail, this.user.password);
-    // this.doLogin = true;
+    this.authenticationService.login(this.user.userEmail, this.user.password);
+  }
+  logout() {
+    this.authenticationService.logout();
   }
 
   // login
-
-  // product
-  selectProduct() {
-
-  }
-  // product
 }

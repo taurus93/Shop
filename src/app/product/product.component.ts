@@ -36,6 +36,9 @@ export class ProductComponent implements OnInit {
       quantity: 0,
       totalPrice: 0,
       productID_FK: 9,
+      productPicture: 'iphone6.jpg',
+      productName: 'iphone 6',
+      productDescription: 'test',
       userEmail_FK: 'lethanhtunglc@gmail.com',
       paymentID_FK: 1
     };

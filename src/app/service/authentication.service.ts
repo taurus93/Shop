@@ -20,21 +20,22 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
+  login(userEmail, password) {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
-    return this.http.get<any>(this.ROOT_URL + 'users/authenticate?userEmail=' + username + '&password=' + password, {headers})
-      .pipe(map(user => {
-        // login successful if there's a jwt token in the response
-        if (user) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
+
+    this.http.get<any[]>(this.ROOT_URL + 'user/authenticate?userEmail=' + userEmail
+      + '&password=' + password, {headers})
+      .subscribe(
+        (data: any[]) => {
+          if (data.length) {
+            localStorage.setItem('currentUser', JSON.stringify(data[0]));
+            this.currentUserSubject.next(data[0]);
+          }
         }
-
-        return user;
-      }));
+      );
+    // this.authenticationService.login(this.user.userEmail, this.user.password);
+    // this.doLogin = true;
   }
-
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
