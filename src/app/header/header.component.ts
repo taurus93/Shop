@@ -44,7 +44,8 @@ export class HeaderComponent implements OnInit {
     this.user = {
       userName: '',
       userEmail: '',
-      password: ''
+      password: '',
+      profile: ''
     };
   }
 

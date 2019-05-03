@@ -40,7 +40,8 @@ export class BodyComponent implements OnInit {
     this.user = {
       userName: '',
       userEmail: '',
-      password: ''
+      password: '',
+      profile: ''
     };
   }
 

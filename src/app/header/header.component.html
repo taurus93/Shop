@@ -34,7 +34,10 @@
         </div>
       </div>
       <div class="ui-g-5 truncate-text-custom" *ngIf="currentUser">
-        <div class="ui-g-6 no-padding text-wrapper cursor-pointer truncate">
+        <div class="ui-g-6 no-padding text-wrapper cursor-pointer truncate" *ngIf="currentUser.profile != 'admin'">
+          <span class="txt">{{currentUser.userName}}</span>
+        </div>
+        <div class="ui-g-6 no-padding text-wrapper cursor-pointer truncate" [routerLink]="['/admin']" *ngIf="currentUser.profile == 'admin'">
           <span class="txt">{{currentUser.userName}}</span>
         </div>
         <div class="ui-g-6 no-padding text-wrapper cursor-pointer" (click)="logout()">

@@ -11,13 +11,15 @@ import {ProductModule} from './product/product.module';
 import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
 import { FactureComponent } from './facture/facture.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CartComponent,
-    FactureComponent
+    FactureComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -26,8 +28,7 @@ import { FactureComponent } from './facture/facture.component';
     HeaderModule,
     BodyModule,
     HttpClientModule,
-    ProductModule,
-    BodyModule
+    ProductModule
   ],
   providers: [],
   bootstrap: [AppComponent]
