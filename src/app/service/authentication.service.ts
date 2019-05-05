@@ -36,6 +36,19 @@ export class AuthenticationService {
     // this.authenticationService.login(this.user.userEmail, this.user.password);
     // this.doLogin = true;
   }
+  update(userEmail) {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    this.http.get<any[]>(this.ROOT_URL + 'user/getUserByUserEmail?userEmail=' + userEmail, {headers})
+      .subscribe(
+        (data: any[]) => {
+          if (data.length) {
+            localStorage.setItem('currentUser', JSON.stringify(data[0]));
+            this.currentUserSubject.next(data[0]);
+          }
+        }
+      );
+  }
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');

@@ -1,19 +1,14 @@
-<p>
-  Start editing to see some magic happen :)
-</p>
-<ngb-tabset>
-  <ngb-tab title="test">
-    <ng-template ngbTabContent>
-      xxx ss
-    </ng-template>
-  </ngb-tab>
+<div class="menu">
+  <div class="item" [routerLink]="['/home']">
+    <div class="element-content">
+      <span class="txt">MyShop</span>
+    </div>
+  </div>
+  <div class="item" [routerLink]="['/admin/'+item.label]" *ngFor="let item of items">
+    <div class="element-content">
+      <span class="txt2 truncate">{{item.label}}</span>
+    </div>
+  </div>
+</div>
 
-  <ngb-tab title="test">
-    <ng-template ngbTabContent>
-      xxxs ss
-    </ng-template>
-  </ngb-tab>
-</ngb-tabset>
-<ngb-alert [dismissible]="false">
-  <strong>Warning!</strong> Better check yourself, you're not looking too good.
-</ngb-alert>
+

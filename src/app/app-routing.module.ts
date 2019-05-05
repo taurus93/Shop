@@ -5,7 +5,8 @@ import {ProductComponent} from './product/product.component';
 import {HomeComponent} from './home/home.component';
 import {CartComponent} from './cart/cart.component';
 import {FactureComponent} from './facture/facture.component';
-import {AdminComponent} from "./admin/admin.component";
+import {AdminComponent} from './admin/admin.component';
+import {UserComponent} from './admin/user/user.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import {AdminComponent} from "./admin/admin.component";
       {path: 'cart', component: CartComponent},
       {path: 'facture', component: FactureComponent},
       {path: 'admin', component: AdminComponent},
+      {path: 'admin/user', component: UserComponent},
       {
         path: 'product/:productCode',
         component: ProductComponent

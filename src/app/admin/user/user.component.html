@@ -1,0 +1,127 @@
+<app-admin></app-admin>
+<div class="container">
+
+  <div>
+    <h2>List User</h2>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary" (click)="openCreateModal()" data-toggle="modal" data-target="#modalCreate">Create</button>
+  </div>
+  <div class="menu">
+    <ul class="list-group" *ngFor="let item of users | async">
+      <li class="list-group-item cursor_poiter" (click)="select(item)" data-toggle="modal" data-target="#modalEdit">
+        <span class="txt2 truncate" [textContent]=item.userName></span>
+        <button type="button" class="btn btn-danger float-right" (click)="delete(item);$event.stopPropagation()">delete</button>
+      </li>
+    </ul>
+  </div>
+
+
+  <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Edit here</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="container">
+          <div class="row">
+            <form class="form-custom" [formGroup]="form" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label>User Name</label>
+                <input type="text" formControlName="userName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
+                <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                  <div *ngIf="f.userName.errors.required">First Name is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>User Email</label>
+                <input type="text" formControlName="userEmail" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.userEmail.errors }" />
+                <div *ngIf="submitted && f.userEmail.errors" class="invalid-feedback">
+                  <div *ngIf="f.userEmail.errors.required">userEmail is required</div>
+                  <div *ngIf="f.userEmail.errors.userEmail">userEmail must be a valid userEmail address</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" formControlName="password" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">Password is required</div>
+                  <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Profile</label>
+                <input type="text" formControlName="profile" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.profile.errors }" />
+                <div *ngIf="submitted && f.profile.errors" class="invalid-feedback">
+                  <div *ngIf="f.profile.errors.required">Last Name is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary">submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Edit here</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="container">
+          <div class="row">
+            <form class="form-custom" [formGroup]="formCreate" (ngSubmit)="onSubmitCreate()">
+              <div class="form-group">
+                <label>User Name</label>
+                <input type="text" formControlName="userName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
+                <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                  <div *ngIf="f.userName.errors.required">First Name is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>User Email</label>
+                <input type="text" formControlName="userEmail" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.userEmail.errors }" />
+                <div *ngIf="submitted && f.userEmail.errors" class="invalid-feedback">
+                  <div *ngIf="f.userEmail.errors.required">userEmail is required</div>
+                  <div *ngIf="f.userEmail.errors.userEmail">userEmail must be a valid userEmail address</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" formControlName="password" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">Password is required</div>
+                  <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Profile</label>
+                <input type="text" formControlName="profile" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.profile.errors }" />
+                <div *ngIf="submitted && f.profile.errors" class="invalid-feedback">
+                  <div *ngIf="f.profile.errors.required">Last Name is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary">submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

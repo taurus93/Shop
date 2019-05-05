@@ -47,6 +47,7 @@ export class HeaderComponent implements OnInit {
       password: '',
       profile: ''
     };
+    this.authenticationService.update(this.currentUser.userEmail);
   }
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {

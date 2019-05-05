@@ -12,14 +12,16 @@ import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
 import { FactureComponent } from './facture/facture.component';
 import { AdminComponent } from './admin/admin.component';
+import {UserComponent} from './admin/user/user.component';
+import {UserModule} from './admin/user/user.module';
+import {AdminModule} from './admin/admin.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CartComponent,
-    FactureComponent,
-    AdminComponent
+    FactureComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,9 @@ import { AdminComponent } from './admin/admin.component';
     HeaderModule,
     BodyModule,
     HttpClientModule,
-    ProductModule
+    ProductModule,
+    UserModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]
