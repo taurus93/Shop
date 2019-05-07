@@ -1,5 +1,5 @@
-export interface Order {
-  orderCode: string;
+export interface OrderDetail {
+  orderDetailCode: string;
   orderDate: string;
   quantity: number;
   totalPrice: number;

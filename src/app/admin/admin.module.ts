@@ -4,9 +4,10 @@ import {AdminComponent} from './admin.component';
 import {AppComponent} from '../app.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { UserComponent } from './user/user.component';
 import {RouterModule} from '@angular/router';
+import { OrderMngComponent } from './order-mng/order-mng.component';
+import { FactureMngComponent } from './facture-mng/facture-mng.component';
+import { CategoryMngComponent } from './category-mng/category-mng.component';
 
 @NgModule({
   declarations: [AdminComponent],

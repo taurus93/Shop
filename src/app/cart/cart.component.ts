@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {Product} from '../model/Product';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Order} from '../model/Order';
+import {OrderDetail} from '../model/OrderDetail';
 import {User} from '../model/User';
 import {AuthenticationService} from '../service/authentication.service';
 
@@ -14,7 +14,7 @@ import {AuthenticationService} from '../service/authentication.service';
 export class CartComponent implements OnInit {
 
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
-  orders: Observable<Order[]>;
+  orders: Observable<OrderDetail[]>;
   currentUser: User;
   currentUserSubscription: Subscription;
 
@@ -28,10 +28,10 @@ export class CartComponent implements OnInit {
     this.orders = this.getAllOrder();
   }
 
-  getAllOrder(): Observable<Order[]> {
+  getAllOrder(): Observable<OrderDetail[]> {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
-    return this.http.get<Order[]>(this.ROOT_URL + 'order/getAllOrderByUser?userEmail=' + this.currentUser.userEmail, {headers});
+    return this.http.get<OrderDetail[]>(this.ROOT_URL + 'orderDetail/getAllOrderByUser?userEmail=' + this.currentUser.userEmail, {headers});
   }
 
 }

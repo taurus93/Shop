@@ -11,10 +11,13 @@ import {ProductModule} from './product/product.module';
 import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
 import { FactureComponent } from './facture/facture.component';
-import { AdminComponent } from './admin/admin.component';
-import {UserComponent} from './admin/user/user.component';
 import {UserModule} from './admin/user/user.module';
 import {AdminModule} from './admin/admin.module';
+import {ProductMngModule} from './admin/product-mng/product-mng.module';
+import {PaymentMngModule} from './admin/payment-mng/payment-mng.module';
+import {OrderMngModule} from './admin/order-mng/order-mng.module';
+import {FactureMngModule} from './admin/facture-mng/facture-mng.module';
+import {CategoryMngModule} from './admin/category-mng/category-mng.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,12 @@ import {AdminModule} from './admin/admin.module';
     HttpClientModule,
     ProductModule,
     UserModule,
-    AdminModule
+    AdminModule,
+    ProductMngModule,
+    PaymentMngModule,
+    OrderMngModule,
+    FactureMngModule,
+    CategoryMngModule
   ],
   providers: [],
   bootstrap: [AppComponent]

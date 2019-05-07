@@ -7,6 +7,11 @@ import {CartComponent} from './cart/cart.component';
 import {FactureComponent} from './facture/facture.component';
 import {AdminComponent} from './admin/admin.component';
 import {UserComponent} from './admin/user/user.component';
+import {ProductMngComponent} from './admin/product-mng/product-mng.component';
+import {PaymentMngComponent} from './admin/payment-mng/payment-mng.component';
+import {OrderMngComponent} from './admin/order-mng/order-mng.component';
+import {FactureMngComponent} from './admin/facture-mng/facture-mng.component';
+import {CategoryMngComponent} from './admin/category-mng/category-mng.component';
 
 
 @NgModule({
@@ -20,6 +25,11 @@ import {UserComponent} from './admin/user/user.component';
       {path: 'facture', component: FactureComponent},
       {path: 'admin', component: AdminComponent},
       {path: 'admin/user', component: UserComponent},
+      {path: 'admin/product', component: ProductMngComponent},
+      {path: 'admin/payment', component: PaymentMngComponent},
+      {path: 'admin/orderdetails', component: OrderMngComponent},
+      {path: 'admin/facture', component: FactureMngComponent},
+      {path: 'admin/category', component: CategoryMngComponent},
       {
         path: 'product/:productCode',
         component: ProductComponent

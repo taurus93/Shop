@@ -4,7 +4,7 @@ import {Product} from '../model/Product';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import * as $ from 'jquery';
-import {Order} from '../model/Order';
+import {OrderDetail} from '../model/OrderDetail';
 import {formatDate } from '@angular/common';
 import {Facture} from '../model/Facture';
 import {AuthenticationService} from '../service/authentication.service';
@@ -20,7 +20,7 @@ export class ProductComponent implements OnInit {
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
   products: Observable<Product[]>;
   product: Product;
-  order: Order;
+  order: OrderDetail;
   productCode: string;
   today = new Date();
   jstoday = '';
@@ -42,7 +42,7 @@ export class ProductComponent implements OnInit {
     });
     this.jstoday = formatDate(this.today, 'yyyy-MM-dd', 'en-US', '+0530');
     this.order = {
-      orderCode: this.today.getTime().toString(),
+      orderDetailCode: this.today.getTime().toString(),
       orderDate: this.jstoday,
       quantity: 0,
       totalPrice: 0,
@@ -75,7 +75,7 @@ export class ProductComponent implements OnInit {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
     if (this.order.quantity > 0) {
-      this.http.post(this.ROOT_URL + 'order/insertOrder', this.order).subscribe(
+      this.http.post(this.ROOT_URL + 'orderDetail/insertOrder', this.order).subscribe(
         (data: any[]) => {
           console.log(data);
         });
@@ -85,13 +85,13 @@ export class ProductComponent implements OnInit {
   createFacture() {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
-    this.facture.orderCode = this.order.orderCode;
+    this.facture.orderCode = this.order.orderDetailCode;
     this.http.post(this.ROOT_URL + 'facture/insertFacture', this.facture).subscribe(
       (data: any[]) => {
         console.log(data);
       });
 
-    this.http.get<any[]>(this.ROOT_URL + 'order/deleteOrder?orderCode=' + this.order.orderCode, {headers}).subscribe(
+    this.http.get<any[]>(this.ROOT_URL + 'orderDetail/deleteOrder?orderCode=' + this.order.orderDetailCode, {headers}).subscribe(
       (data: any[]) => {
       }
     );
