@@ -1,4 +1,4 @@
-<div class="menu">
+<div class="menu" *ngIf="currentUser.profile == 'admin'">
   <div class="item" [routerLink]="['/home']">
     <div class="element-content">
       <span class="txt">MyShop</span>

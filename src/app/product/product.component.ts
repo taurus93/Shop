@@ -41,18 +41,33 @@ export class ProductComponent implements OnInit {
       this.productCode = params.get('productCode');
     });
     this.jstoday = formatDate(this.today, 'yyyy-MM-dd', 'en-US', '+0530');
-    this.order = {
-      orderDetailCode: this.today.getTime().toString(),
-      orderDate: this.jstoday,
-      quantity: 0,
-      totalPrice: 0,
-      productID_FK: 9,
-      productPicture: 'iphone6.jpg',
-      productName: 'iphone 6',
-      productDescription: 'test',
-      userEmail_FK: this.currentUser.userEmail,
-      paymentID_FK: 1
-    };
+    if (this.currentUser) {
+      this.order = {
+        orderDetailCode: this.today.getTime().toString(),
+        orderDate: this.jstoday,
+        quantity: 0,
+        totalPrice: 0,
+        productID_FK: 9,
+        productPicture: 'iphone6.jpg',
+        productName: 'iphone 6',
+        productDescription: 'test',
+        userEmail_FK: this.currentUser.userEmail,
+        paymentID_FK: 1
+      };
+    } else {
+      this.order = {
+        orderDetailCode: this.today.getTime().toString(),
+        orderDate: this.jstoday,
+        quantity: 0,
+        totalPrice: 0,
+        productID_FK: 9,
+        productPicture: 'iphone6.jpg',
+        productName: 'iphone 6',
+        productDescription: 'test',
+        userEmail_FK: '',
+        paymentID_FK: 1
+      };
+    }
     this.facture = {
       orderCode: ''
     }

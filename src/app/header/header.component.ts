@@ -6,6 +6,9 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {Product} from '../model/Product';
 import {User} from '../model/User';
 import {AuthenticationService} from '../service/authentication.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MustMatch} from '../_helpers/must-match.validator';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-header',
@@ -26,8 +29,20 @@ export class HeaderComponent implements OnInit {
   currentUser: User;
   currentUserSubscription: Subscription;
   private currentUserSubject: BehaviorSubject<User>;
+  form: FormGroup;
+  submitted = false;
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      userName: ['', Validators.required],
+      userEmail: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      profile: ['', Validators.required],
+      street: ['', Validators.required],
+      suburb: ['', Validators.required],
+      city: ['', Validators.required],
+      postcode: ['', Validators.required],
+    });
     this.items = [
       {label: 'Stats', icon: 'fa fa-fw fa-bar-chart'},
       {label: 'Calendar', icon: 'fa fa-fw fa-calendar'},
@@ -41,16 +56,29 @@ export class HeaderComponent implements OnInit {
     this.images.push({source: '../assets/post1.jpg', alt: '', title: ''});
     this.images.push({source: '../assets/post2.jpg', alt: '', title: ''});
     this.images.push({source: '../assets/post3.jpg', alt: '', title: ''});
-    this.user = {
+    this.user = this.userTmp = {
       userName: '',
       userEmail: '',
       password: '',
-      profile: ''
+      profile: '',
+      street: '',
+      suburb: '',
+      city: '',
+      postcode: ''
     };
-    this.authenticationService.update(this.currentUser.userEmail);
+    try {
+      this.authenticationService.update(this.currentUser.userEmail);
+    } catch (e) {
+      // No content response..
+    }
   }
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.form.controls;
+  }
+
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService, private formBuilder: FormBuilder) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
@@ -77,19 +105,49 @@ export class HeaderComponent implements OnInit {
   createUser(): void {
     console.log(this.user);
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
-
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
-    this.http.post(this.ROOT_URL + 'user/insertUser', this.user).subscribe(
+
+    this.userTmp.userName = this.form.value.userName;
+    this.userTmp.userEmail = this.form.value.userEmail;
+    this.userTmp.password = this.form.value.password;
+    this.userTmp.profile = this.form.value.profile;
+    this.userTmp.street = this.form.value.street;
+    this.userTmp.suburb = this.form.value.suburb;
+    this.userTmp.city = this.form.value.city;
+    this.userTmp.postcode = this.form.value.postcode;
+
+    // if (this.userTmp.profile === 'User') {
+    this.userTmp.profile = this.userTmp.profile.toLowerCase();
+    // } else if (this.userTmp.profile === 'Seller') {
+    //   this.userTmp.profile = 'seller';
+    // }
+    this.http.post(this.ROOT_URL + 'user/insertUser', this.userTmp).subscribe(
       (data: any[]) => {
         console.log(data);
       });
+    $('.close').click();
   }
 
   login() {
     this.authenticationService.login(this.user.userEmail, this.user.password);
   }
+
   logout() {
     this.authenticationService.logout();
+  }
+
+  resetPass() {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    // this.http.get<number>(this.ROOT_URL + 'user/resetPass?userEmail=' + this.user.userEmail, {headers});
+    this.http.get<any[]>(this.ROOT_URL + 'user/resetPass?userEmail=' + this.user.userEmail, {headers}).subscribe(
+      (data: any[]) => {
+      }
+    );
   }
 
   // login

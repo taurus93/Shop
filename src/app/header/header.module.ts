@@ -11,8 +11,10 @@ import {DataViewModule} from 'primeng/dataview';
 import {CarouselModule} from 'primeng/carousel';
 import {DialogModule} from 'primeng/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BodyModule} from '../body/body.module';
+import {AdminModule} from '../admin/admin.module';
+import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -27,7 +29,10 @@ import {BodyModule} from '../body/body.module';
     DialogModule,
     BrowserAnimationsModule,
     FormsModule,
-    BodyModule
+    BodyModule,
+    AdminModule,
+    ReactiveFormsModule,
+    NgbModalModule
   ],
   providers: [],
   bootstrap: [AppComponent],

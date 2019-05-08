@@ -1,19 +1,37 @@
 <app-admin></app-admin>
 <div class="container">
 
-  <div>
-    <h2>List User</h2>
+  <div class="" *ngIf="currentUser.profile == 'admin'">
+    <div>
+      <h2>List User</h2>
+    </div>
+    <div>
+      <button type="button" class="btn btn-primary" (click)="openCreateModal()" data-toggle="modal" data-target="#modalCreate">Create</button>
+    </div>
+    <div class="menu">
+      <ul class="list-group" *ngFor="let item of users | async">
+        <li class="list-group-item cursor_poiter" (click)="select(item)" data-toggle="modal" data-target="#modalEdit">
+          <span class="txt2 truncate" [textContent]=item.userName></span>
+          <button type="button" class="btn btn-danger float-right" (click)="delete(item);$event.stopPropagation()">delete</button>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div>
-    <button type="button" class="btn btn-primary" (click)="openCreateModal()" data-toggle="modal" data-target="#modalCreate">Create</button>
-  </div>
-  <div class="menu">
-    <ul class="list-group" *ngFor="let item of users | async">
-      <li class="list-group-item cursor_poiter" (click)="select(item)" data-toggle="modal" data-target="#modalEdit">
-        <span class="txt2 truncate" [textContent]=item.userName></span>
-        <button type="button" class="btn btn-danger float-right" (click)="delete(item);$event.stopPropagation()">delete</button>
-      </li>
-    </ul>
+  <div class="" *ngIf="currentUser.profile == 'user'">
+    <div>
+      <h2>List User</h2>
+    </div>
+    <div>
+      <button type="button" class="btn btn-primary" *ngIf="currentUser.profile == 'admin'" (click)="openCreateModal()" data-toggle="modal" data-target="#modalCreate">Create</button>
+    </div>
+    <div class="menu">
+      <ul class="list-group" *ngFor="let item of users | async">
+        <li class="list-group-item cursor_poiter" (click)="select(item)" data-toggle="modal" data-target="#modalEdit">
+          <span class="txt2 truncate" [textContent]=item.userName></span>
+          <button type="button" class="btn btn-danger float-right" *ngIf="currentUser.profile == 'admin'" (click)="delete(item);$event.stopPropagation()">delete</button>
+        </li>
+      </ul>
+    </div>
   </div>
 
 

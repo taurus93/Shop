@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Component, Input, OnInit} from '@angular/core';
+import {Observable, Subscription} from 'rxjs';
 import {Category} from '../../model/Category';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../../model/User';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as $ from 'jquery';
+import {AuthenticationService} from '../../service/authentication.service';
 
 
 @Component({
@@ -14,19 +15,34 @@ import * as $ from 'jquery';
 })
 export class UserComponent implements OnInit {
 
+  @Input() name: string;
   form: FormGroup;
   formCreate: FormGroup;
   users: Observable<User[]>;
   itemSelected: User;
   itemTmp: User;
   status: 0;
+  currentUserSubscription: Subscription;
+  currentUser: User;
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private formBuilder: FormBuilder, private authenticationService: AuthenticationService) {
+    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
   ngOnInit() {
-    this.users = this.getAllUser();
+    try {
+      this.authenticationService.update(this.currentUser.userEmail);
+    } catch (e) {
+      // No content response..
+    }
+    if (this.currentUser.profile === 'admin') {
+      this.users = this.getAllUser();
+    } else {
+      this.users = this.getUser();
+    }
     this.form = this.formBuilder.group({
       userName: ['', Validators.required],
       userEmail: ['', [Validators.required, Validators.email]],
@@ -43,7 +59,11 @@ export class UserComponent implements OnInit {
       userName: '',
       userEmail: '',
       password: '',
-      profile: ''
+      profile: '',
+      street: '',
+      suburb: '',
+      city: '',
+      postcode: ''
     };
   }
 
@@ -51,6 +71,11 @@ export class UserComponent implements OnInit {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
     return this.http.get<User[]>(this.ROOT_URL + 'user/getAllUser', {headers});
+  }
+  getUser(): Observable<User[]> {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    return this.http.get<User[]>(this.ROOT_URL + 'user/getUserByUserEmail?userEmail=' + this.currentUser.userEmail, {headers});
   }
 
   select(item) {
@@ -92,9 +117,9 @@ export class UserComponent implements OnInit {
     this.itemSelected.profile = this.form.value.profile;
 
     this.http.post(this.ROOT_URL + 'user/updateUser', this.itemSelected).subscribe(
-    (data: any[]) => {
-      this.users = this.getAllUser();
-    });
+      (data: any[]) => {
+        this.users = this.getAllUser();
+      });
 
     $('.close').click();
   }
@@ -111,9 +136,9 @@ export class UserComponent implements OnInit {
 
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
     this.http.post(this.ROOT_URL + 'user/insertUser', this.itemTmp).subscribe(
-    (data: any[]) => {
-      this.users = this.getAllUser();
-    });
+      (data: any[]) => {
+        this.users = this.getAllUser();
+      });
 
     $('.close').click();
   }

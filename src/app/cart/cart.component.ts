@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {Product} from '../model/Product';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -25,7 +25,9 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.orders = this.getAllOrder();
+    if (this.currentUser) {
+      this.orders = this.getAllOrder();
+    }
   }
 
   getAllOrder(): Observable<OrderDetail[]> {
