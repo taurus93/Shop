@@ -96,6 +96,17 @@ export class HeaderComponent implements OnInit {
     return this.http.get<Product[]>(this.ROOT_URL + 'product/getAllProduct', {headers});
   }
 
+  getProductByCategory(id) {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    this.http.get<Observable<Product[]>>(this.ROOT_URL + 'product/getProductByCategory?categoryCode=' + id,
+      {headers}).subscribe(
+      (data: Observable<Product[]>) => {
+        this.products = data;
+      }
+    );
+  }
+
 
   // login
   showDialog() {

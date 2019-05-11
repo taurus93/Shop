@@ -21,6 +21,16 @@
         <span class="txt2" [textContent]=post.totalPrice></span>
         <span class="txt2"> đ</span>
       </div>
+      <div class="element-content" *ngIf="post.status == 2">
+        <span class="txt2">Đã thanh toán</span>
+      </div>
+      <div class="element-content" *ngIf="post.status == 1">
+        <span class="txt2">Chưa thanh toán</span>
+      </div>
+    </div>
+
+    <div class="element-content">
+      <button type="button" class="btn btn-warning" (click)="createFacture()">Thanh toán</button>
     </div>
   </div>
 </div>

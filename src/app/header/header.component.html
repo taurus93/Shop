@@ -47,12 +47,12 @@
     </div>
   </div>
   <div class="ui-g container header-with-search-wrapper">
-    <div class="ui-g-2 height-100 no-padding">
+    <div class="ui-g-2 height-100 no-padding" [routerLink]="['/home']">
       <div class="ui-g-8 shop-icon">
         <div class="ui-g-5">
           <i class="pi pi-home size-icon-2 icon-color"></i>
         </div>
-        <div class="ui-g-6 shop-name" [routerLink]="['/home']">
+        <div class="ui-g-6 shop-name">
           <span class="txt">MyShop</span>
         </div>
       </div>
@@ -74,7 +74,7 @@
   <div class="ui-g container header-list-category">
     <div class="height-4 no-padding category-wrapper">
       <div class="element" *ngFor="let post of categories | async">
-        <span class="txt" [textContent]=post.categoryName></span>
+        <span class="txt" (click)="getProductByCategory(post.categoryCode)" [textContent]=post.categoryName></span>
       </div>
     </div>
   </div>

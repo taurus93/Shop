@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {Product} from '../model/Product';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import * as $ from 'jquery';
 import {OrderDetail} from '../model/OrderDetail';
-import {formatDate } from '@angular/common';
+import {formatDate} from '@angular/common';
 import {Facture} from '../model/Facture';
 import {AuthenticationService} from '../service/authentication.service';
 import {User} from '../model/User';
+import {OrderUser} from '../model/OrderUser';
+import {OrderProduct} from '../model/OrderProduct';
 
 @Component({
   selector: 'app-product',
@@ -21,6 +23,7 @@ export class ProductComponent implements OnInit {
   products: Observable<Product[]>;
   product: Product;
   order: OrderDetail;
+  orderProduct: OrderProduct;
   productCode: string;
   today = new Date();
   jstoday = '';
@@ -42,35 +45,40 @@ export class ProductComponent implements OnInit {
     });
     this.jstoday = formatDate(this.today, 'yyyy-MM-dd', 'en-US', '+0530');
     if (this.currentUser) {
-      this.order = {
-        orderDetailCode: this.today.getTime().toString(),
-        orderDate: this.jstoday,
-        quantity: 0,
+      this.orderProduct = {
+        orderCode: '',
+        productCode: this.productCode,
         totalPrice: 0,
-        productID_FK: 9,
-        productPicture: 'iphone6.jpg',
-        productName: 'iphone 6',
-        productDescription: 'test',
-        userEmail_FK: this.currentUser.userEmail,
-        paymentID_FK: 1
+        orderDate: '',
+        quantity: 0,
+        userEmail: this.currentUser.userEmail,
+        productPicture: '',
+        productName: '',
+        productDescription: '',
+        status: 1
       };
     } else {
-      this.order = {
-        orderDetailCode: this.today.getTime().toString(),
-        orderDate: this.jstoday,
-        quantity: 0,
+      this.orderProduct = {
+        orderCode: '',
+        productCode: this.productCode,
         totalPrice: 0,
-        productID_FK: 9,
-        productPicture: 'iphone6.jpg',
-        productName: 'iphone 6',
-        productDescription: 'test',
-        userEmail_FK: '',
-        paymentID_FK: 1
+        orderDate: '',
+        quantity: 0,
+        userEmail: '',
+        productPicture: '',
+        productName: '',
+        productDescription: '',
+        status: 1
       };
     }
     this.facture = {
-      orderCode: ''
-    }
+      orderCode: '',
+      userEmail: this.currentUser.userEmail,
+      productName: '',
+      quantity: 0,
+      totalPrice: 0,
+      status: 1
+    };
     this.getProduct();
   }
 
@@ -86,29 +94,31 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  insertProduct() {
+  insertOrderProduct() {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
-    if (this.order.quantity > 0) {
-      this.http.post(this.ROOT_URL + 'orderDetail/insertOrder', this.order).subscribe(
+
+    this.orderProduct.orderCode = new Date().getTime().toString();
+    this.orderProduct.orderDate = new Date().getTime().toString();
+
+    if (this.orderProduct.quantity > 0) {
+      this.http.post(this.ROOT_URL + 'orderProduct/insertOrderProduct', this.orderProduct).subscribe(
         (data: any[]) => {
           console.log(data);
         });
     }
+    $('.alert').show();
   }
 
   createFacture() {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
-    this.facture.orderCode = this.order.orderDetailCode;
+    this.facture.orderCode = this.orderProduct.orderCode;
+    if (this.orderProduct.quantity > 0) {
     this.http.post(this.ROOT_URL + 'facture/insertFacture', this.facture).subscribe(
       (data: any[]) => {
         console.log(data);
       });
-
-    this.http.get<any[]>(this.ROOT_URL + 'orderDetail/deleteOrder?orderCode=' + this.order.orderDetailCode, {headers}).subscribe(
-      (data: any[]) => {
-      }
-    );
+    }
   }
 }
