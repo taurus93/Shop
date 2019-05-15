@@ -20,6 +20,7 @@ export class CartComponent implements OnInit {
   currentUser: User;
   currentUserSubscription: Subscription;
   facture: Facture;
+  showPayAllBtn: boolean;
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
@@ -30,6 +31,13 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     if (this.currentUser) {
       this.orders = this.getAllOrder();
+      this.orders.forEach(order => {
+        if (order.length === 0) {
+          this.showPayAllBtn = false;
+        } else {
+          this.showPayAllBtn = true;
+        }
+      });
       this.facture = {
         orderCode: '',
         userEmail: this.currentUser.userEmail,
@@ -52,6 +60,19 @@ export class CartComponent implements OnInit {
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
     this.orders.forEach(order => {
       console.log(order);
+      this.facture.orderCode = orderCode;
+      this.http.post(this.ROOT_URL + 'facture/insertFacture', this.facture).subscribe(
+        (data: any[]) => {
+          console.log(data);
+          this.orders = this.getAllOrder();
+        });
+    });
+  }
+
+  createFactureAll() {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+    this.orders.forEach(order => {
+      console.log(order);
       for (const value of order) {
         this.facture.orderCode = value.orderCode;
         this.http.post(this.ROOT_URL + 'facture/insertFacture', this.facture).subscribe(
@@ -61,10 +82,25 @@ export class CartComponent implements OnInit {
       }
     });
     this.orders = this.getAllOrder();
-
-    // this.http.get<any[]>(this.ROOT_URL + 'orderDetail/deleteOrder?orderCode=' + orderCode, {headers}).subscribe(
-    //   (data: any[]) => {
-    //   }
-    // );
   }
+
+  delete(item) {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    this.http.get<any[]>(this.ROOT_URL + 'orderProduct/deleteOrderProduct?orderProductCode=' + item.orderCode, {headers}).subscribe(
+      (data: any[]) => {
+        this.orders = this.getAllOrder();
+      }
+    );
+
+    this.orders.forEach(order => {
+      if (order.length === 0) {
+        this.showPayAllBtn = false;
+      } else {
+        this.showPayAllBtn = true;
+      }
+    });
+  }
+
+
 }

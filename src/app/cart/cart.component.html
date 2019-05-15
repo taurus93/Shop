@@ -27,10 +27,16 @@
       <div class="element-content" *ngIf="post.status == 1">
         <span class="txt2">Chưa thanh toán</span>
       </div>
+      <div class="element-content" *ngIf="post.status == 1">
+        <button type="button" class="btn btn-warning" (click)="createFacture(post.orderCode)">Thanh toán</button>
+      </div>
+      <div class="element-content" *ngIf="post.status == 2">
+        <button type="button" class="btn btn-warning" (click)="delete(post)">Xóa</button>
+      </div>
     </div>
 
-    <div class="element-content">
-      <button type="button" class="btn btn-warning" (click)="createFacture()">Thanh toán</button>
+    <div class="element-content" *ngIf="showPayAllBtn">
+      <button type="button" class="btn btn-warning" (click)="createFactureAll()">Thanh toán Tất cả</button>
     </div>
   </div>
 </div>

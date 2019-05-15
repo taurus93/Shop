@@ -55,7 +55,8 @@ export class ProductComponent implements OnInit {
         productPicture: '',
         productName: '',
         productDescription: '',
-        status: 1
+        status: 1,
+        paymentCode: '1'
       };
     } else {
       this.orderProduct = {
@@ -68,7 +69,8 @@ export class ProductComponent implements OnInit {
         productPicture: '',
         productName: '',
         productDescription: '',
-        status: 1
+        status: 1,
+        paymentCode: '1'
       };
     }
     this.facture = {

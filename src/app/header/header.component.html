@@ -17,14 +17,6 @@
       </div>
     </div>
     <div class="ui-g-6">
-      <div class="ui-g-3 max-width-1 truncate-text-custom">
-        <i class="pi pi-bell pi-bell icon-color" style="font-size: 1em"></i>
-        <span class="txt">Thông báo</span>
-      </div>
-      <div class="ui-g-2 max-width-1 truncate-text-custom">
-        <i class="pi pi-question pi-question-circle icon-color" style="font-size: 1em"></i>
-        <span class="txt">Trợ giúp</span>
-      </div>
       <div class="ui-g-4 truncate-text-custom" *ngIf="!currentUser">
         <div class="ui-g-6 no-padding text-wrapper sign-in cursor-pointer" data-toggle="modal" data-target="#modalRegisterForm">
           <span class="txt">Đăng ký</span>
@@ -43,6 +35,9 @@
         <div class="ui-g-6 no-padding text-wrapper cursor-pointer" (click)="logout()">
           <span class="txt">Đăng xuất</span>
         </div>
+      </div>
+      <div class="ui-g-5 cursor-pointer truncate-text-custom" *ngIf="currentUser" [routerLink]="['/facture']">
+        <span class="txt">Theo dõi đơn hàng</span>
       </div>
     </div>
   </div>

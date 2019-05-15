@@ -28,15 +28,15 @@ export class FactureComponent implements OnInit {
   ngOnInit() {
     if (this.currentUser) {
       this.factures = this.getAllFacture();
+      this.facture = {
+        orderCode: '',
+        userEmail: this.currentUser.userEmail,
+        productName: '',
+        quantity: 0,
+        totalPrice: 0,
+        status: 1
+      };
     }
-    this.facture = {
-      orderCode: '',
-      userEmail: this.currentUser.userEmail,
-      productName: '',
-      quantity: 0,
-      totalPrice: 0,
-      status: 1
-    };
   }
 
   getAllFacture(): Observable<Facture[]> {

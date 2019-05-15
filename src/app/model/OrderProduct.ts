@@ -9,4 +9,5 @@ export interface OrderProduct {
   productName: string;
   productDescription: string;
   status: number;
+  paymentCode: string;
 }
