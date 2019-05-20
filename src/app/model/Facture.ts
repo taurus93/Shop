@@ -1,5 +1,5 @@
 export interface Facture {
-  orderCode: string;
+  factureCode: string;
   userEmail: string;
   productName: string;
   quantity: number;

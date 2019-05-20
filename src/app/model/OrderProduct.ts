@@ -1,6 +1,7 @@
 export interface OrderProduct {
   orderCode: string;
   productCode: string;
+  factureCode : string;
   totalPrice: number;
   orderDate: string;
   quantity: number;

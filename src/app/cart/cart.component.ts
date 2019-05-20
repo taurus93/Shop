@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Pipe} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {Product} from '../model/Product';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -21,6 +21,8 @@ export class CartComponent implements OnInit {
   currentUserSubscription: Subscription;
   facture: Facture;
   showPayAllBtn: boolean;
+  totalPriceAll: number = 0.00;
+  numberOfProduct: number = 0.00;
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
@@ -37,9 +39,13 @@ export class CartComponent implements OnInit {
         } else {
           this.showPayAllBtn = true;
         }
+        for(var i=0; i<order.length; i++) {
+          this.totalPriceAll += order[i].totalPrice;
+          this.numberOfProduct++;
+        }
       });
       this.facture = {
-        orderCode: '',
+        factureCode: '',
         userEmail: this.currentUser.userEmail,
         productName: '',
         quantity: 0,
@@ -55,26 +61,26 @@ export class CartComponent implements OnInit {
     return this.http.get<OrderProduct[]>(this.ROOT_URL + 'orderProduct/getOrderProduct?userEmail=' + this.currentUser.userEmail, {headers});
   }
 
-  createFacture(orderCode) {
-    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
-    // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
-    this.orders.forEach(order => {
-      console.log(order);
-      this.facture.orderCode = orderCode;
-      this.http.post(this.ROOT_URL + 'facture/insertFacture', this.facture).subscribe(
-        (data: any[]) => {
-          console.log(data);
-          this.orders = this.getAllOrder();
-        });
-    });
-  }
+  // createFacture(orderCode) {
+  //   const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+  //   // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
+  //   this.orders.forEach(order => {
+  //     console.log(order);
+  //     this.facture.factureCode = orderCode+this.currentUser.userEmail;
+  //     this.http.post(this.ROOT_URL + 'facture/insertFacture', this.facture).subscribe(
+  //       (data: any[]) => {
+  //         console.log(data);
+  //         this.orders = this.getAllOrder();
+  //       });
+  //   });
+  // }
 
   createFactureAll() {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
     this.orders.forEach(order => {
       console.log(order);
       for (const value of order) {
-        this.facture.orderCode = value.orderCode;
+        this.facture.factureCode = value.orderCode;
         this.http.post(this.ROOT_URL + 'facture/insertFacture', this.facture).subscribe(
           (data: any[]) => {
             console.log(data);
@@ -100,7 +106,4 @@ export class CartComponent implements OnInit {
         this.showPayAllBtn = true;
       }
     });
-  }
-
-
-}
+  }}

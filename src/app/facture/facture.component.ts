@@ -29,7 +29,7 @@ export class FactureComponent implements OnInit {
     if (this.currentUser) {
       this.factures = this.getAllFacture();
       this.facture = {
-        orderCode: '',
+        factureCode: '',
         userEmail: this.currentUser.userEmail,
         productName: '',
         quantity: 0,

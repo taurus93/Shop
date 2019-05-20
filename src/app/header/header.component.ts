@@ -113,6 +113,10 @@ export class HeaderComponent implements OnInit {
     this.display = true;
   }
 
+  openLoginModal() {
+    $('#modalLoginForm').modal('open');
+  }
+
   createUser(): void {
     console.log(this.user);
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
@@ -131,11 +135,11 @@ export class HeaderComponent implements OnInit {
     this.userTmp.city = this.form.value.city;
     this.userTmp.postcode = this.form.value.postcode;
 
-    // if (this.userTmp.profile === 'User') {
-    this.userTmp.profile = this.userTmp.profile.toLowerCase();
-    // } else if (this.userTmp.profile === 'Seller') {
-    //   this.userTmp.profile = 'seller';
-    // }
+    if (this.userTmp.profile === 'Người dùng') {
+      this.userTmp.profile = 'user';
+    } else if (this.userTmp.profile === 'Người bán') {
+      this.userTmp.profile = 'seller';
+    }
     this.http.post(this.ROOT_URL + 'user/insertUser', this.userTmp).subscribe(
       (data: any[]) => {
         console.log(data);
