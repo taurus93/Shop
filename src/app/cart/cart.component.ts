@@ -48,11 +48,13 @@ export class CartComponent implements OnInit {
           this.showPayAllBtn = true;
         }
         for(var i=0; i<order.length; i++) {
-          this.totalPriceAll += order[i].totalPrice;
-          this.numberOfProduct++;
-          this.facture.totalPrice += order[i].totalPrice;
-          this.facture.quantity++;
-          this.orderList.push(order[i]);
+          if(order[i].status == 1) {
+            this.totalPriceAll += order[i].totalPrice;
+            this.numberOfProduct++;
+            this.facture.totalPrice += order[i].totalPrice;
+            this.facture.quantity++;
+            this.orderList.push(order[i]);
+          }
         }
       });
     }

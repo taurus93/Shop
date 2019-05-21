@@ -6,7 +6,7 @@
   <!--</div>-->
   <!--</div>-->
   <div class="ui-g-12 height-4 category-wrapper">
-    <div class="element-product cursor-pointer" *ngFor="let post of orders | async">
+    <div class="cursor-pointer" *ngFor="let post of orders | async">
       <div class="container-product" *ngIf="post.status == 1">
         <div class="element-img">
           <img src="../assets/{{post.productPicture}}" alt="">
