@@ -31,7 +31,6 @@ export class FactureComponent implements OnInit {
       this.facture = {
         factureCode: '',
         userEmail: this.currentUser.userEmail,
-        productName: '',
         quantity: 0,
         totalPrice: 0,
         status: 1

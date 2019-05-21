@@ -23,6 +23,7 @@ export class CartComponent implements OnInit {
   showPayAllBtn: boolean;
   totalPriceAll: number = 0.00;
   numberOfProduct: number = 0.00;
+  public orderList: OrderProduct[] = [];
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
@@ -32,6 +33,13 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     if (this.currentUser) {
+      this.facture = {
+        factureCode: '',
+        userEmail: this.currentUser.userEmail,
+        quantity: this.numberOfProduct,
+        totalPrice: this.totalPriceAll,
+        status: 1
+      };
       this.orders = this.getAllOrder();
       this.orders.forEach(order => {
         if (order.length === 0) {
@@ -42,16 +50,11 @@ export class CartComponent implements OnInit {
         for(var i=0; i<order.length; i++) {
           this.totalPriceAll += order[i].totalPrice;
           this.numberOfProduct++;
+          this.facture.totalPrice += order[i].totalPrice;
+          this.facture.quantity++;
+          this.orderList.push(order[i]);
         }
       });
-      this.facture = {
-        factureCode: '',
-        userEmail: this.currentUser.userEmail,
-        productName: '',
-        quantity: 0,
-        totalPrice: 0,
-        status: 1
-      };
     }
   }
 
@@ -77,16 +80,29 @@ export class CartComponent implements OnInit {
 
   createFactureAll() {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
-    this.orders.forEach(order => {
-      console.log(order);
-      for (const value of order) {
-        this.facture.factureCode = value.orderCode;
-        this.http.post(this.ROOT_URL + 'facture/insertFacture', this.facture).subscribe(
-          (data: any[]) => {
-            console.log(data);
-          });
-      }
-    });
+    // this.orders.forEach(order => {
+    //   console.log(order);
+    //   for (const value of order) {
+    //     this.facture.factureCode = new Date().getTime().toString();
+    //     const obj = {
+    //       "facture": this.facture,
+    //       "orderList": this.orderList
+    //     };
+    //     this.http.post(this.ROOT_URL + 'facture/insertFacture', JSON.stringify(obj)).subscribe(
+    //       (data: any[]) => {
+    //         console.log(data);
+    //       });
+    //   }
+    // });
+    this.facture.factureCode = new Date().getTime().toString();
+    const obj = {
+      "facture": this.facture,
+      "orderList": this.orderList
+    };
+    this.http.post(this.ROOT_URL + 'facture/insertFacture', JSON.stringify(obj)).subscribe(
+      (data: any[]) => {
+        console.log(data);
+      });
     this.orders = this.getAllOrder();
   }
 

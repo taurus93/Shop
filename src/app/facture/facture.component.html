@@ -8,13 +8,7 @@
   <div class="ui-g-12 height-4 category-wrapper">
     <div class="element-product cursor-pointer" *ngFor="let post of factures | async">
       <div class="element-content">
-        <span class="txt2" [textContent]=post.orderCode></span>
-      </div>
-      <div class="element-content">
-        <span class="txt2" [textContent]=post.productName></span>
-      </div>
-      <div class="element-content">
-        <span class="txt2" [textContent]=post.pr></span>
+        <span class="txt2" [textContent]=post.factureCode></span>
       </div>
       <div class="element-content">
         <span class="txt2">Số lượng: </span>

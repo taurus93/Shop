@@ -64,7 +64,6 @@ export class ProductComponent implements OnInit {
       this.facture = {
         factureCode: '',
         userEmail: this.currentUser.userEmail,
-        productName: '',
         quantity: 0,
         totalPrice: 0,
         status: 1
@@ -87,7 +86,6 @@ export class ProductComponent implements OnInit {
       this.facture = {
         factureCode: '',
         userEmail: '',
-        productName: '',
         quantity: 0,
         totalPrice: 0,
         status: 1

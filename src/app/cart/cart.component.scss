@@ -161,3 +161,11 @@ $global-color: linear-gradient(-180deg,#f53d2d,#f63);
 .align-content-center {
   text-align: center;
 }
+.submit-order {
+  position: fixed;
+  bottom: 0;
+}
+.container-product {
+  display: flex;
+  width: 100%;
+}
