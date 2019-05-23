@@ -176,7 +176,7 @@ export class ProductMngComponent implements OnInit {
   basicUpload(files: File[]){
     var formData = new FormData();
     Array.from(files).forEach(f => formData.append('file', f))
-    this.http.post('http://localhost:4200/assets/images', formData)
+    this.http.post('http://localhost:8007/uploadFile', formData)
       .subscribe(event => {
         console.log('done')
       })
@@ -185,7 +185,7 @@ export class ProductMngComponent implements OnInit {
   //this will fail since file.io dosen't accept this type of upload
   //but it is still possible to upload a file with this style
   basicUploadSingle(file: File){
-    this.http.post('http://localhost:4200/assets/images', file)
+    this.http.post('http://localhost:8007/uploadFile', file)
       .subscribe(event => {
         console.log('done')
       })
@@ -194,10 +194,20 @@ export class ProductMngComponent implements OnInit {
   uploadAndProgress(files: File[]){
     console.log(files)
     var formData = new FormData();
-    Array.from(files).forEach(f => formData.append('file',f))
+    Array.from(files).forEach(f => formData.append('file',f));
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
-    this.http.post('http://localhost:4200', formData, {reportProgress: true, observe: 'events'})
-      .subscribe(event => {
+    // this.http.post('http://localhost:8007/uploadFile', { file: files }, {reportProgress: true, observe: 'events'})
+    //   .subscribe(event => {
+    //     if (event.type === HttpEventType.UploadProgress) {
+    //       this.percentDone = Math.round(100 * event.loaded / event.total);
+    //     } else if (event instanceof HttpResponse) {
+    //       this.uploadSuccess = true;
+    //     }
+    //   });
+
+    this.http.post('http://localhost:8007/uploadFile', formData, {reportProgress: true, observe: 'events'}).subscribe(
+      event => {
         if (event.type === HttpEventType.UploadProgress) {
           this.percentDone = Math.round(100 * event.loaded / event.total);
         } else if (event instanceof HttpResponse) {
@@ -209,7 +219,7 @@ export class ProductMngComponent implements OnInit {
   //this will fail since file.io dosen't accept this type of upload
   //but it is still possible to upload a file with this style
   uploadAndProgressSingle(file: File){
-    this.http.post('http://localhost:4200/assets/', file, {reportProgress: true, observe: 'events'})
+    this.http.post('http://localhost:8007/uploadFile', file, {reportProgress: true, observe: 'events'})
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
           this.percentDone = Math.round(100 * event.loaded / event.total);
