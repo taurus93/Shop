@@ -4,5 +4,5 @@ export interface Product {
   productPrice: number;
   productPicture: string;
   productDescription: string;
-  categoryID_FK: number;
+  categoryCode: string;
 }

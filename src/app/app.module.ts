@@ -18,13 +18,15 @@ import {PaymentMngModule} from './admin/payment-mng/payment-mng.module';
 import {OrderMngModule} from './admin/order-mng/order-mng.module';
 import {FactureMngModule} from './admin/facture-mng/facture-mng.module';
 import {CategoryMngModule} from './admin/category-mng/category-mng.module';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CartComponent,
-    FactureComponent
+    FactureComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,

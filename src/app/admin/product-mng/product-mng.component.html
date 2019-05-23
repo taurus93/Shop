@@ -2,16 +2,16 @@
 <div class="container">
 
   <div>
-    <h2>List Product</h2>
+    <h2>Danh sách sản phẩm</h2>
   </div>
   <div>
-    <button type="button" class="btn btn-primary" (click)="openCreateModal()" data-toggle="modal" data-target="#modalCreate">Create</button>
+    <button type="button" class="btn btn-primary" (click)="openCreateModal()" data-toggle="modal" data-target="#modalCreate">Tạo mới</button>
   </div>
   <div class="menu">
     <ul class="list-group" *ngFor="let item of items | async">
       <li class="list-group-item cursor_poiter" (click)="select(item)" data-toggle="modal" data-target="#modalEdit">
         <span class="txt2 truncate" [textContent]=item.productName></span>
-        <button type="button" class="btn btn-danger float-right" (click)="delete(item);$event.stopPropagation()">delete</button>
+        <button type="button" class="btn btn-danger float-right" (click)="delete(item);$event.stopPropagation()">Xóa</button>
       </li>
     </ul>
   </div>
@@ -22,7 +22,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Edit here</h4>
+          <h4 class="modal-title w-100 font-weight-bold">Sửa sản phẩm</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -31,51 +31,51 @@
           <div class="row">
             <form class="form-custom" [formGroup]="form" (ngSubmit)="onSubmit()">
               <div class="form-group">
-                <label>Product Code</label>
+                <label>Mã sản phẩm</label>
                 <input type="text" formControlName="productCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productCode.errors }" />
                 <div *ngIf="submitted && f.productCode.errors" class="invalid-feedback">
-                  <div *ngIf="f.productCode.errors.required">First Name is required</div>
+                  <div *ngIf="f.productCode.errors.required">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Product Name</label>
+                <label>Tên sản phẩm</label>
                 <input type="text" formControlName="productName" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.productName.errors }" />
                 <div *ngIf="submitted && f.productName.errors" class="invalid-feedback">
-                  <div *ngIf="f.productName.errors.required">userEmail is required</div>
-                  <div *ngIf="f.productName.errors.productName">userEmail must be a valid userEmail address</div>
+                  <div *ngIf="f.productName.errors.required">Trường này không được để trống</div>
+                  <div *ngIf="f.productName.errors.productName">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Price</label>
+                <label>Giá</label>
                 <input type="number" formControlName="productPrice" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.productPrice.errors }" />
                 <div *ngIf="submitted && f.productPrice.errors" class="invalid-feedback">
-                  <div *ngIf="f.productPrice.errors.required">Password is required</div>
-                  <div *ngIf="f.productPrice.errors.minlength">Password must be at least 6 characters</div>
+                  <div *ngIf="f.productPrice.errors.required">Trường này không được để trống</div>
+                  <div *ngIf="f.productPrice.errors.minlength">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Picture</label>
+                <label>Ảnh</label>
                 <input type="text" formControlName="productPicture" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productPicture.errors }" />
                 <div *ngIf="submitted && f.productPicture.errors" class="invalid-feedback">
-                  <div *ngIf="f.productPicture.errors.required">Last Name is required</div>
+                  <div *ngIf="f.productPicture.errors.required">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Description</label>
+                <label>Mô tả</label>
                 <input type="text" formControlName="productDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productDescription.errors }" />
                 <div *ngIf="submitted && f.productDescription.errors" class="invalid-feedback">
-                  <div *ngIf="f.productDescription.errors.required">Last Name is required</div>
+                  <div *ngIf="f.productDescription.errors.required">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>categoryID_FK</label>
-                <input type="text" formControlName="categoryID_FK" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoryID_FK.errors }" />
-                <div *ngIf="submitted && f.categoryID_FK.errors" class="invalid-feedback">
-                  <div *ngIf="f.categoryID_FK.errors.required">Last Name is required</div>
+                <label>Loại sản phẩm</label>
+                <input type="text" formControlName="categoryCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoryCode.errors }" />
+                <div *ngIf="submitted && f.categoryCode.errors" class="invalid-feedback">
+                  <div *ngIf="f.categoryCode.errors.required">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <button class="btn btn-primary">submit</button>
+                <button class="btn btn-primary">Tạo sản phẩm</button>
               </div>
             </form>
           </div>
@@ -91,7 +91,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Edit here</h4>
+          <h4 class="modal-title w-100 font-weight-bold">Sửa sản phẩm</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -100,48 +100,54 @@
           <div class="row">
             <form class="form-custom" [formGroup]="formCreate" (ngSubmit)="onSubmitCreate()">
               <div class="form-group">
-                <label>Product Code</label>
+                <label>Mã sản phẩm</label>
                 <input type="text" formControlName="productCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productCode.errors }" />
                 <div *ngIf="submitted && f.productCode.errors" class="invalid-feedback">
-                  <div *ngIf="f.productCode.errors.required">First Name is required</div>
+                  <div *ngIf="f.productCode.errors.required">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Product Name</label>
+                <label>Tên sản phẩm</label>
                 <input type="text" formControlName="productName" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.productName.errors }" />
                 <div *ngIf="submitted && f.productName.errors" class="invalid-feedback">
-                  <div *ngIf="f.productName.errors.required">userEmail is required</div>
-                  <div *ngIf="f.productName.errors.productName">userEmail must be a valid userEmail address</div>
+                  <div *ngIf="f.productName.errors.required">Trường này không được để trống</div>
+                  <div *ngIf="f.productName.errors.productName">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Price</label>
+                <label>Giá</label>
                 <input type="number" formControlName="productPrice" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.productPrice.errors }" />
                 <div *ngIf="submitted && f.productPrice.errors" class="invalid-feedback">
-                  <div *ngIf="f.productPrice.errors.required">Password is required</div>
-                  <div *ngIf="f.productPrice.errors.minlength">Password must be at least 6 characters</div>
+                  <div *ngIf="f.productPrice.errors.required">Trường này không được để trống</div>
+                  <div *ngIf="f.productPrice.errors.minlength">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Picture</label>
-                <input type="text" formControlName="productPicture" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productPicture.errors }" />
+                <label>Ảnh</label>
+                <input type="file" (change)="upload($event.target.files)" />
+                Upload Percent: {{percentDone}}% <br />
+
+                <ng-container *ngIf="uploadSuccess">
+                  Upload Successful
+                </ng-container>
                 <div *ngIf="submitted && f.productPicture.errors" class="invalid-feedback">
-                  <div *ngIf="f.productPicture.errors.required">Last Name is required</div>
+                  <div *ngIf="f.productPicture.errors.required">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Description</label>
+                <label>Mô tả</label>
                 <input type="text" formControlName="productDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productDescription.errors }" />
                 <div *ngIf="submitted && f.productDescription.errors" class="invalid-feedback">
-                  <div *ngIf="f.productDescription.errors.required">Last Name is required</div>
+                  <div *ngIf="f.productDescription.errors.required">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>categoryID_FK</label>
-                <input type="text" formControlName="categoryID_FK" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoryID_FK.errors }" />
-                <div *ngIf="submitted && f.categoryID_FK.errors" class="invalid-feedback">
-                  <div *ngIf="f.categoryID_FK.errors.required">Last Name is required</div>
-                </div>
+                <label>Loại sản phẩm</label>
+                <select class="browser-default custom-select" formControlName="categoryCode" [ngClass]="{ 'is-invalid': submitted && f.profile.errors }">
+                  <option selected *ngFor="let item of categories | async">
+                    <span class="txt" [textContent]=item.categoryName (click)="selectCategory(item)"></span>
+                  </option>
+                </select>
               </div>
               <div class="form-group">
                 <button class="btn btn-primary">submit</button>

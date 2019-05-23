@@ -48,12 +48,20 @@ export class UserComponent implements OnInit {
       userEmail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       profile: ['', Validators.required],
+      street: ['', Validators.required],
+      suburb: ['', Validators.required],
+      city: ['', Validators.required],
+      postcode: ['', Validators.required],
     });
     this.formCreate = this.formBuilder.group({
       userName: ['', Validators.required],
       userEmail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       profile: ['', Validators.required],
+      street: ['', Validators.required],
+      suburb: ['', Validators.required],
+      city: ['', Validators.required],
+      postcode: ['', Validators.required],
     });
     this.itemTmp = {
       userName: '',
@@ -84,7 +92,11 @@ export class UserComponent implements OnInit {
       userName: item.userName,
       userEmail: item.userEmail,
       password: item.password,
-      profile: item.profile
+      profile: item.profile,
+      street: item.street,
+      suburb: item.suburb,
+      city: item.city,
+      postcode: item.postcode
     });
   }
 
@@ -103,7 +115,11 @@ export class UserComponent implements OnInit {
       userName: '',
       userEmail: '',
       password: '',
-      profile: ''
+      profile: '',
+      street: '',
+      suburb: '',
+      city: '',
+      postcode: ''
     });
   }
 
@@ -115,6 +131,10 @@ export class UserComponent implements OnInit {
     this.itemSelected.userEmail = this.form.value.userEmail;
     this.itemSelected.password = this.form.value.password;
     this.itemSelected.profile = this.form.value.profile;
+    this.itemSelected.street = this.form.value.street;
+    this.itemSelected.suburb = this.form.value.suburb;
+    this.itemSelected.city = this.form.value.city;
+    this.itemSelected.postcode = this.form.value.postcode;
 
     this.http.post(this.ROOT_URL + 'user/updateUser', this.itemSelected).subscribe(
       (data: any[]) => {
@@ -122,6 +142,10 @@ export class UserComponent implements OnInit {
       });
 
     $('.close').click();
+  }
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.form.controls;
   }
 
   onSubmitCreate() {
@@ -133,6 +157,10 @@ export class UserComponent implements OnInit {
     this.itemTmp.userEmail = this.formCreate.value.userEmail;
     this.itemTmp.password = this.formCreate.value.password;
     this.itemTmp.profile = this.formCreate.value.profile;
+    this.itemTmp.street = this.formCreate.value.street;
+    this.itemTmp.suburb = this.formCreate.value.suburb;
+    this.itemTmp.city = this.formCreate.value.city;
+    this.itemTmp.postcode = this.formCreate.value.postcode;
 
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
     this.http.post(this.ROOT_URL + 'user/insertUser', this.itemTmp).subscribe(

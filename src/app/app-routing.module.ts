@@ -34,7 +34,7 @@ import {CategoryMngComponent} from './admin/category-mng/category-mng.component'
         path: 'product/:productCode',
         component: ProductComponent
       },
-      {path: '**', redirectTo: 'home'}
+      // {path: '**', redirectTo: 'home'}
     ])
   ],
   exports: [RouterModule],
