@@ -17,7 +17,7 @@
   <div class="height-4 no-padding category-wrapper">
     <div class="element-product cursor-pointer" [routerLink]="['/product', post.productCode]" *ngFor="let post of products | async">
       <div class="element-img">
-        <img src="../assets/{{post.productPicture}}" alt="">
+        <img src="../assets/images/{{post.productPicture}}" alt="">
       </div>
       <div class="element-content">
         <span class="txt2 truncate" [textContent]=post.productDescription></span>

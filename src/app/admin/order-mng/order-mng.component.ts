@@ -4,7 +4,11 @@ import {Observable} from 'rxjs';
 import {Payment} from '../../model/Payment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import * as $ from 'jquery';
-import {OrderDetail} from '../../model/OrderDetail';
+import {OrderProduct} from '../../model/OrderProduct';
+import {ProductMngComponent} from "../product-mng/product-mng.component";
+import {Product} from "../../model/Product";
+import {AdminComponent} from "../admin.component";
+import {User} from "../../model/User";
 
 @Component({
   selector: 'app-order-mng',
@@ -15,81 +19,114 @@ export class OrderMngComponent implements OnInit {
 
   form: FormGroup;
   formCreate: FormGroup;
-  items: Observable<OrderDetail[]>;
-  itemSelected: OrderDetail;
-  itemTmp: OrderDetail;
+  items: Observable<OrderProduct[]>;
+  listProduct: Observable<Product[]>;
+  itemSelected: OrderProduct;
+  itemTmp: OrderProduct;
+  listPayment: Observable<Payment[]>;
+  listUser: Observable<User[]>;
   status: 0;
+  submitted: boolean;
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private formBuilder: FormBuilder, private adminComponent: AdminComponent) {
   }
 
   ngOnInit() {
     this.items = this.getAll();
+    this.listProduct = this.getAllProduct();
+    this.listPayment = this.getAllPayment();
+    this.listUser = this.getAllUser();
     this.form = this.formBuilder.group({
-      orderDetailCode: ['', Validators.required],
+      orderCode: ['', Validators.required],
+      productCode: ['', Validators.required],
+      factureCode: ['', Validators.required],
+      totalPrice: ['', Validators.required],
       orderDate: ['', Validators.required],
       quantity: ['', Validators.required],
-      totalPrice: ['', Validators.required],
+      userEmail: ['', Validators.required],
       productPicture: ['', Validators.required],
       productName: ['', Validators.required],
       productDescription: ['', Validators.required],
-      productID_FK: ['', Validators.required],
-      userEmail_FK: ['', Validators.required],
-      paymentID_FK: ['', Validators.required]
+      status: ['', Validators.required],
+      paymentCode: ['', Validators.required]
     });
     this.formCreate = this.formBuilder.group({
-      orderDetailCode: ['', Validators.required],
+      orderCode: ['', Validators.required],
+      productCode: ['', Validators.required],
+      factureCode: ['', Validators.required],
+      totalPrice: ['', Validators.required],
       orderDate: ['', Validators.required],
       quantity: ['', Validators.required],
-      totalPrice: ['', Validators.required],
+      userEmail: ['', Validators.required],
       productPicture: ['', Validators.required],
       productName: ['', Validators.required],
       productDescription: ['', Validators.required],
-      productID_FK: ['', Validators.required],
-      userEmail_FK: ['', Validators.required],
-      paymentID_FK: ['', Validators.required]
+      status: ['', Validators.required],
+      paymentCode: ['', Validators.required]
     });
     this.itemTmp = {
-      orderDetailCode: '',
+      orderCode: '',
+      productCode: '',
+      factureCode: '',
+      totalPrice: 0,
       orderDate: '',
       quantity: 0,
-      totalPrice: 0,
+      userEmail: '',
       productPicture: '',
       productName: '',
       productDescription: '',
-      productID_FK: 0,
-      userEmail_FK: '',
-      paymentID_FK: 0
+      status: 1,
+      paymentCode: ''
     };
   }
 
-  getAll(): Observable<OrderDetail[]> {
+  getAll(): Observable<OrderProduct[]> {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
-    return this.http.get<OrderDetail[]>(this.ROOT_URL + 'orderDetail/getAllOrder', {headers});
+    return this.http.get<OrderProduct[]>(this.ROOT_URL + 'orderProduct/getAllOrderProduct', {headers});
+  }
+
+  getAllProduct(): Observable<Product[]> {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    return this.http.get<Product[]>(this.ROOT_URL + 'product/getAllProduct', {headers});
+  }
+
+  getAllPayment(): Observable<Payment[]> {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    return this.http.get<Payment[]>(this.ROOT_URL + 'payment/getAllPayment', {headers});
+  }
+
+  getAllUser(): Observable<User[]> {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    return this.http.get<User[]>(this.ROOT_URL + 'user/getAllUser', {headers});
   }
 
   select(item) {
     this.itemSelected = item;
     this.form.setValue({
-      orderDetailCode: item.orderDetailCode,
+      orderCode: item.orderCode,
+      productCode: item.productCode,
+      factureCode: item.factureCode,
+      totalPrice: item.totalPrice,
       orderDate: item.orderDate,
       quantity: item.quantity,
-      totalPrice: item.totalPrice,
+      userEmail: item.userEmail,
       productPicture: item.productPicture,
       productName: item.productName,
       productDescription: item.productDescription,
-      productID_FK: item.productID_FK,
-      userEmail_FK: item.userEmail_FK,
-      paymentID_FK: item.paymentID_FK
+      status: item.status,
+      paymentCode: item.paymentCode
     });
   }
 
   delete(item) {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
-    this.http.get<any[]>(this.ROOT_URL + 'orderDetail/deleteOrder?orderDetailCode=' + item.orderDetailCode, {headers}).subscribe(
+    this.http.get<any[]>(this.ROOT_URL + 'orderProduct/deleteOrderProduct?orderProductCode=' + item.orderCode, {headers}).subscribe(
       (data: any[]) => {
         this.items = this.getAll();
       }
@@ -98,34 +135,49 @@ export class OrderMngComponent implements OnInit {
 
   openCreateModal() {
     this.formCreate.setValue({
-      orderDetailCode: '',
+      orderCode: '',
+      productCode: '',
+      factureCode: '',
+      totalPrice: 0,
       orderDate: '',
       quantity: 0,
-      totalPrice: 0,
+      userEmail: '',
       productPicture: '',
       productName: '',
       productDescription: '',
-      productID_FK: 0,
-      userEmail_FK: '',
-      paymentID_FK: 0
+      status: 1,
+      paymentCode: ''
     });
+  }
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.form.controls;
+  }
+  get fCreate() {
+    return this.formCreate.controls;
   }
 
   onSubmit() {
 
     // stop here if form is invalid
+    this.submitted = true;
+    if(!this.form.valid) {
+      return;
+    }
 
-    this.itemSelected.orderDetailCode = this.form.value.orderDetailCode;
+    this.itemSelected.orderCode = this.form.value.orderCode;
+    this.itemSelected.productCode = this.form.value.productCode;
+    this.itemSelected.factureCode = this.form.value.factureCode;
+    this.itemSelected.totalPrice = this.form.value.totalPrice;
     this.itemSelected.orderDate = this.form.value.orderDate;
     this.itemSelected.quantity = this.form.value.quantity;
-    this.itemSelected.totalPrice = this.form.value.totalPrice;
+    this.itemSelected.userEmail = this.form.value.userEmail;
     this.itemSelected.productPicture = this.form.value.productPicture;
     this.itemSelected.productName = this.form.value.productName;
     this.itemSelected.productDescription = this.form.value.productDescription;
-    this.itemSelected.productID_FK = this.form.value.productID_FK;
-    this.itemSelected.userEmail_FK = this.form.value.userEmail_FK;
-    this.itemSelected.paymentID_FK = this.form.value.paymentID_FK;
-    this.http.post(this.ROOT_URL + 'orderDetail/updateOrder', this.itemSelected).subscribe(
+    this.itemSelected.status = this.form.value.status;
+    this.itemSelected.paymentCode = this.form.value.paymentCode;
+    this.http.post(this.ROOT_URL + 'orderProduct/updateOrder', this.itemSelected).subscribe(
       (data: any[]) => {
         this.items = this.getAll();
       });
@@ -138,19 +190,21 @@ export class OrderMngComponent implements OnInit {
     // stop here if form is invalid
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
-    this.itemTmp.orderDetailCode = this.formCreate.value.orderDetailCode;
+    this.itemTmp.orderCode = this.formCreate.value.orderCode;
+    this.itemTmp.productCode = this.formCreate.value.productCode;
+    this.itemTmp.factureCode = this.formCreate.value.factureCode;
+    this.itemTmp.totalPrice = this.formCreate.value.totalPrice;
     this.itemTmp.orderDate = this.formCreate.value.orderDate;
     this.itemTmp.quantity = this.formCreate.value.quantity;
-    this.itemTmp.totalPrice = this.formCreate.value.totalPrice;
+    this.itemTmp.userEmail = this.formCreate.value.userEmail;
     this.itemTmp.productPicture = this.formCreate.value.productPicture;
     this.itemTmp.productName = this.formCreate.value.productName;
     this.itemTmp.productDescription = this.formCreate.value.productDescription;
-    this.itemTmp.productID_FK = this.formCreate.value.productID_FK;
-    this.itemTmp.userEmail_FK = this.formCreate.value.userEmail_FK;
-    this.itemTmp.paymentID_FK = this.formCreate.value.paymentID_FK;
+    this.itemTmp.status = this.formCreate.value.status;
+    this.itemTmp.paymentCode = this.formCreate.value.paymentCode;
 
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
-    this.http.post(this.ROOT_URL + 'orderDetail/insertOrder', this.itemTmp).subscribe(
+    this.http.post(this.ROOT_URL + 'orderProduct/insertOrderProduct', this.itemTmp).subscribe(
       (data: any[]) => {
         this.items = this.getAll();
       });

@@ -35,7 +35,7 @@
   </div>
 
 
-  <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  <div class="modal fade no-overflow" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
        aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -74,8 +74,9 @@
               <div class="form-group">
                 <label class="label-custom">Chọn loại người dùng</label>
                 <select class="browser-default custom-select" formControlName="profile" [ngClass]="{ 'is-invalid': submitted && f.profile.errors }">
-                  <option selected>Người dùng</option>
-                  <option value="1">Người bán</option>
+                  <option value="user" selected>Người dùng</option>
+                  <option value="seller">Người bán</option>
+                  <option value="admin">Admin</option>
                 </select>
                 <div *ngIf="submitted && f.profile.errors" class="invalid-feedback">
                   <div *ngIf="f.profile.errors.required">Trường này không được trống</div>
@@ -121,7 +122,7 @@
 
 
 
-  <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  <div class="modal fade no-overflow" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
        aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -136,63 +137,63 @@
             <form class="form-custom" [formGroup]="formCreate" (ngSubmit)="onSubmitCreate()">
               <div class="form-group">
                 <label class="label-custom">Tên</label>
-                <input type="text" formControlName="userName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
-                <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
-                  <div *ngIf="f.userName.errors.required">Tên bạn không được để trống</div>
+                <input type="text" formControlName="userName" class="form-control" [ngClass]="{ 'is-invalid': submittedCreate && fCreate.userName.errors }" />
+                <div *ngIf="submittedCreate && fCreate.userName.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.userName.errors.required">Tên bạn không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="label-custom">Địa chỉ Email</label>
-                <input type="text" formControlName="userEmail" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.userEmail.errors }" />
-                <div *ngIf="submitted && f.userEmail.errors" class="invalid-feedback">
-                  <div *ngIf="f.userEmail.errors.required">Địa chỉ Email không được để trống</div>
-                  <div *ngIf="f.userEmail.errors.userEmail">Địa chỉ Email chưa đúng</div>
+                <input type="text" formControlName="userEmail" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submittedCreate && fCreate.userEmail.errors }" />
+                <div *ngIf="submittedCreate && fCreate.userEmail.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.userEmail.errors.required">Địa chỉ Email không được để trống</div>
+                  <div *ngIf="fCreate.userEmail.errors.userEmail">Địa chỉ Email chưa đúng</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="label-custom">Mật khẩu</label>
-                <input type="password" formControlName="password" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                  <div *ngIf="f.password.errors.required">Mật khẩu không được để trống</div>
-                  <div *ngIf="f.password.errors.minlength">Mật khẩu ít nhất có 6 ký tự</div>
+                <input type="password" formControlName="password" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submittedCreate && fCreate.password.errors }" />
+                <div *ngIf="submittedCreate && fCreate.password.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.password.errors.required">Mật khẩu không được để trống</div>
+                  <div *ngIf="fCreate.password.errors.minlength">Mật khẩu ít nhất có 6 ký tự</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="label-custom">Chọn loại người dùng</label>
-                <select class="browser-default custom-select" formControlName="profile" [ngClass]="{ 'is-invalid': submitted && f.profile.errors }">
+                <select class="browser-default custom-select" formControlName="profile" [ngClass]="{ 'is-invalid': submittedCreate && fCreate.profile.errors }">
                   <option selected>Người dùng</option>
                   <option value="1">Người bán</option>
                 </select>
-                <div *ngIf="submitted && f.profile.errors" class="invalid-feedback">
-                  <div *ngIf="f.profile.errors.required">Trường này không được trống</div>
+                <div *ngIf="submittedCreate && fCreate.profile.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.profile.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="label-custom">Đường phố</label>
-                <input type="text" formControlName="street" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.street.errors }" />
-                <div *ngIf="submitted && f.street.errors" class="invalid-feedback">
-                  <div *ngIf="f.street.errors.required">Trường này không được trống</div>
+                <input type="text" formControlName="street" class="form-control" [ngClass]="{ 'is-invalid': submittedCreate && fCreate.street.errors }" />
+                <div *ngIf="submittedCreate && fCreate.street.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.street.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="label-custom">Quận</label>
-                <input type="text" formControlName="suburb" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.suburb.errors }" />
-                <div *ngIf="submitted && f.suburb.errors" class="invalid-feedback">
-                  <div *ngIf="f.suburb.errors.required">Trường này không được trống</div>
+                <input type="text" formControlName="suburb" class="form-control" [ngClass]="{ 'is-invalid': submittedCreate && fCreate.suburb.errors }" />
+                <div *ngIf="submittedCreate && fCreate.suburb.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.suburb.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="label-custom">Thành phố</label>
-                <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
-                <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                  <div *ngIf="f.city.errors.required">Trường này không được trống</div>
+                <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submittedCreate && fCreate.city.errors }" />
+                <div *ngIf="submittedCreate && fCreate.city.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.city.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="label-custom">Mã postcode</label>
-                <input type="text" formControlName="postcode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.postcode.errors }" />
-                <div *ngIf="submitted && f.postcode.errors" class="invalid-feedback">
-                  <div *ngIf="f.postcode.errors.required">Trường này không được trống</div>
+                <input type="text" formControlName="postcode" class="form-control" [ngClass]="{ 'is-invalid': submittedCreate && fCreate.postcode.errors }" />
+                <div *ngIf="submittedCreate && fCreate.postcode.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.postcode.errors.required">Trường này không được trống</div>
                 </div>
               </div>
             </form>

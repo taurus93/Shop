@@ -4,7 +4,7 @@
       <span class="txt">MyShop</span>
     </div>
   </div>
-  <div class="item" [routerLink]="['/admin/'+item.label]" *ngFor="let item of items">
+  <div class="item" [routerLink]="['/admin/'+item.code]" *ngFor="let item of items">
     <div class="element-content">
       <span class="txt2 truncate">{{item.label}}</span>
     </div>

@@ -25,6 +25,8 @@ export class ProductMngComponent implements OnInit {
   categories: Observable<Category[]>;
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
   url = '';
+  files: File[];
+  listUser: Observable<User[]>;
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder, private uploadComponent: UploadComponent) {
   }
@@ -32,6 +34,7 @@ export class ProductMngComponent implements OnInit {
   ngOnInit() {
     this.items = this.getAll();
     this.categories = this.getAllCategory();
+    this.listUser = this.getAllUser();
     this.form = this.formBuilder.group({
       productCode: ['', Validators.required],
       productName: ['', Validators.required],
@@ -63,11 +66,24 @@ export class ProductMngComponent implements OnInit {
 
     return this.http.get<Product[]>(this.ROOT_URL + 'product/getAllProduct', {headers});
   }
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.form.controls;
+  }
+  get fCreate() {
+    return this.formCreate.controls;
+  }
 
   getAllCategory(): Observable<Category[]> {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
     return this.http.get<Category[]>(this.ROOT_URL + 'category/getAllCategory', {headers});
+  }
+
+  getAllUser(): Observable<User[]> {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    return this.http.get<User[]>(this.ROOT_URL + 'user/getAllUser', {headers});
   }
 
   select(item) {
@@ -130,23 +146,23 @@ export class ProductMngComponent implements OnInit {
     this.itemTmp.productCode = this.formCreate.value.productCode;
     this.itemTmp.productName = this.formCreate.value.productName;
     this.itemTmp.productPrice = this.formCreate.value.productPrice;
-    this.itemTmp.productPicture = this.formCreate.value.productPicture;
+    this.itemTmp.productPicture = this.files[0].name;
     this.itemTmp.productDescription = this.formCreate.value.productDescription;
     this.categories.forEach(a => {
       for(var i=0; i<a.length; i++) {
         if(a[i].categoryName == this.formCreate.value.categoryCode) {
           this.itemTmp.categoryCode = a[i].categoryCode;
+          this.http.post(this.ROOT_URL + 'orderProduct/insertOrderProduct', this.itemTmp).subscribe(
+            (data: any[]) => {
+              this.items = this.getAll();
+            });
+          this.uploadAndProgress(this.files);
+          $('.close').click();
         }
       }
     });
 
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
-    this.http.post(this.ROOT_URL + 'product/insertProduct', this.itemTmp).subscribe(
-      (data: any[]) => {
-        this.items = this.getAll();
-      });
-
-    $('.close').click();
   }
 
   onSelectFile(event) {
@@ -156,7 +172,7 @@ export class ProductMngComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (event) => { // called once readAsDataURL is completed
-        this.url = event.target.result;
+        // this.url = event.target.result;
       }
     }
   }
@@ -170,7 +186,7 @@ export class ProductMngComponent implements OnInit {
 
   upload(files: File[]){
     //pick from one of the 4 styles of file uploads below
-    this.uploadAndProgress(files);
+    this.files = files;
   }
 
   basicUpload(files: File[]){
@@ -212,6 +228,7 @@ export class ProductMngComponent implements OnInit {
           this.percentDone = Math.round(100 * event.loaded / event.total);
         } else if (event instanceof HttpResponse) {
           this.uploadSuccess = true;
+          this.items = this.getAll();
         }
       });
   }

@@ -6,6 +6,7 @@ import {AdminModule} from '../admin.module';
 import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {OrderMngComponent} from './order-mng.component';
 import {AppComponent} from '../../app.component';
+import {AdminComponent} from "../admin.component";
 
 @NgModule({
   declarations: [OrderMngComponent],
@@ -18,6 +19,7 @@ import {AppComponent} from '../../app.component';
     NgbModalModule
   ],
   bootstrap: [AppComponent],
-  exports: [OrderMngComponent]
+  exports: [OrderMngComponent],
+  providers: [AdminComponent]
 })
 export class OrderMngModule { }

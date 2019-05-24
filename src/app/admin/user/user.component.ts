@@ -25,6 +25,8 @@ export class UserComponent implements OnInit {
   currentUserSubscription: Subscription;
   currentUser: User;
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
+  submitted = false;
+  submittedCreate = false;
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder, private authenticationService: AuthenticationService) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
@@ -127,6 +129,11 @@ export class UserComponent implements OnInit {
 
     // stop here if form is invalid
 
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
+
     this.itemSelected.userName = this.form.value.userName;
     this.itemSelected.userEmail = this.form.value.userEmail;
     this.itemSelected.password = this.form.value.password;
@@ -135,6 +142,14 @@ export class UserComponent implements OnInit {
     this.itemSelected.suburb = this.form.value.suburb;
     this.itemSelected.city = this.form.value.city;
     this.itemSelected.postcode = this.form.value.postcode;
+
+    if (this.itemSelected.profile === 'Người dùng') {
+      this.itemSelected.profile = 'user';
+    } else if (this.itemSelected.profile === 'Người bán') {
+      this.itemSelected.profile = 'seller';
+    } else if (this.itemSelected.profile === 'Admin') {
+      this.itemSelected.profile = 'admin';
+    }
 
     this.http.post(this.ROOT_URL + 'user/updateUser', this.itemSelected).subscribe(
       (data: any[]) => {
@@ -147,11 +162,19 @@ export class UserComponent implements OnInit {
   get f() {
     return this.form.controls;
   }
+  get fCreate() {
+    return this.formCreate.controls;
+  }
 
   onSubmitCreate() {
 
     // stop here if form is invalid
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    this.submittedCreate = true;
+    if (this.formCreate.invalid) {
+      return;
+    }
 
     this.itemTmp.userName = this.formCreate.value.userName;
     this.itemTmp.userEmail = this.formCreate.value.userEmail;
@@ -161,6 +184,14 @@ export class UserComponent implements OnInit {
     this.itemTmp.suburb = this.formCreate.value.suburb;
     this.itemTmp.city = this.formCreate.value.city;
     this.itemTmp.postcode = this.formCreate.value.postcode;
+
+    if (this.itemTmp.profile === 'Người dùng') {
+      this.itemTmp.profile = 'user';
+    } else if (this.itemTmp.profile === 'Người bán') {
+      this.itemTmp.profile = 'seller';
+    } else if (this.itemTmp.profile === 'Admin') {
+      this.itemTmp.profile = 'admin';
+    }
 
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
     this.http.post(this.ROOT_URL + 'user/insertUser', this.itemTmp).subscribe(

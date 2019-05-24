@@ -63,6 +63,13 @@ export class PaymentMngComponent implements OnInit {
       }
     );
   }
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.form.controls;
+  }
+  get fCreate() {
+    return this.formCreate.controls;
+  }
 
   openCreateModal() {
     this.formCreate.setValue({

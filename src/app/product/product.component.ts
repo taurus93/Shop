@@ -12,6 +12,7 @@ import {User} from '../model/User';
 import {OrderUser} from '../model/OrderUser';
 import {OrderProduct} from '../model/OrderProduct';
 import {HeaderComponent} from "../header/header.component";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-product',
@@ -111,7 +112,7 @@ export class ProductComponent implements OnInit {
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
 
     this.orderProduct.orderCode = new Date().getTime().toString();
-    this.orderProduct.orderDate = new Date().getTime().toString();
+    this.orderProduct.orderDate = moment().format('DD/MM/YYYY');
 
     if (this.currentUser) {
       if (this.orderProduct.quantity > 0) {
