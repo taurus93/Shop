@@ -65,6 +65,9 @@
     <div class="ui-g-2 height-100 cursor-pointer" [routerLink]="['/cart']">
       <i class="pi pi-shopping-cart icon-color"></i>
     </div>
+    <div class="shopee-cart-number-badge" *ngIf="isExistOrder">
+      <span class="" [textContent]=numberOfOrder></span>
+    </div>
   </div>
   <div class="ui-g container header-list-category">
     <div class="height-4 no-padding category-wrapper">
@@ -129,6 +132,13 @@
               <input type="text" formControlName="userName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
               <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
                 <div *ngIf="f.userName.errors.required">Tên bạn không được để trống</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="label-custom">Số điện thoại</label>
+              <input type="text" formControlName="phoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" />
+              <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                <div *ngIf="f.phoneNumber.errors.required">Tên bạn không được để trống</div>
               </div>
             </div>
             <div class="form-group">

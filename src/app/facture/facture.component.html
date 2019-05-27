@@ -6,23 +6,45 @@
   <!--</div>-->
   <!--</div>-->
   <div class="ui-g-12 height-4 category-wrapper">
-    <div class="element-product cursor-pointer" *ngFor="let post of factures | async">
-      <div class="element-content">
-        <span class="txt2" [textContent]=post.factureCode></span>
-      </div>
-      <div class="element-content">
-        <span class="txt2">Số lượng: </span>
-        <span class="txt2" [textContent]=post.quantity></span>
-      </div>
-      <div class="element-content">
-        <span class="txt2" [textContent]=post.totalPrice></span>
-        <span class="txt2"> đ</span>
-      </div>
-      <div class="element-content" *ngIf="post.status == 2">
-        <span class="txt2">Đã thanh toán</span>
-      </div>
-      <div class="element-content" *ngIf="post.status == 1">
-        <span class="txt2">Chưa thanh toán</span>
+    <div class="panel panel-default" *ngFor="let post of factures | async">
+      <div class="shopee-border-delivery"></div>
+      <div class="content-facture-container">
+        <div class="panel-custom">
+          <span> Địa chỉ nhận hàng</span>
+          <div class="element-content">
+            <span class="txt2" [textContent]="currentUser.userName"></span>
+          </div>
+          <div class="element-content">
+            <span class="txt2" [textContent]="currentUser.phoneNumber"></span>
+          </div>
+          <div class="element-content">
+            <span class="txt2" [textContent]="currentUser.street"></span>
+            <span class="txt2">, </span>
+            <span class="txt2" [textContent]="currentUser.suburb"></span>
+            <span class="txt2">, </span>
+            <span class="txt2" [textContent]="currentUser.city"></span>
+          </div>
+        </div>
+        <div class="panel-custom">
+          <div class="element-content">
+            <span class="txt2">Mã đơn hàng:      </span>
+            <span class="txt2" [textContent]=post.factureCode></span>
+          </div>
+          <div class="element-content">
+            <span class="txt2">Số lượng:         </span>
+            <span class="txt2" [textContent]=post.quantity></span>
+          </div>
+          <div class="element-content">
+            <span class="txt2">Tổng số tiền:         </span>
+            <span class="txt2" [textContent]=post.totalPrice></span>
+            <span class="txt2"> đ</span>
+          </div>
+        </div>
+        <div class="panel-custom">
+          <div class="element-content">
+            <span class="txt2">Đã giao hàng</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

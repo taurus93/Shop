@@ -56,6 +56,13 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="label-custom">Số điện thoại</label>
+                <input type="text" formControlName="phoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" />
+                <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                  <div *ngIf="f.phoneNumber.errors.required">Tên bạn không được để trống</div>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="label-custom">Địa chỉ Email</label>
                 <input type="text" formControlName="userEmail" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.userEmail.errors }" />
                 <div *ngIf="submitted && f.userEmail.errors" class="invalid-feedback">
@@ -140,6 +147,13 @@
                 <input type="text" formControlName="userName" class="form-control" [ngClass]="{ 'is-invalid': submittedCreate && fCreate.userName.errors }" />
                 <div *ngIf="submittedCreate && fCreate.userName.errors" class="invalid-feedback">
                   <div *ngIf="fCreate.userName.errors.required">Tên bạn không được để trống</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="label-custom">Số điện thoại</label>
+                <input type="text" formControlName="phoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" />
+                <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                  <div *ngIf="f.phoneNumber.errors.required">Tên bạn không được để trống</div>
                 </div>
               </div>
               <div class="form-group">

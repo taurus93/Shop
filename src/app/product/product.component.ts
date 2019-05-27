@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {Product} from '../model/Product';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as $ from 'jquery';
 import {OrderDetail} from '../model/OrderDetail';
 import {formatDate} from '@angular/common';
@@ -11,7 +11,6 @@ import {AuthenticationService} from '../service/authentication.service';
 import {User} from '../model/User';
 import {OrderUser} from '../model/OrderUser';
 import {OrderProduct} from '../model/OrderProduct';
-import {HeaderComponent} from "../header/header.component";
 import * as moment from 'moment';
 
 @Component({
@@ -34,7 +33,7 @@ export class ProductComponent implements OnInit {
   currentUser: User;
 
   constructor(private http: HttpClient, private route: ActivatedRoute,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService, private router: Router) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
@@ -122,7 +121,7 @@ export class ProductComponent implements OnInit {
             $('#order-success-alert').show();
           });
       }
-    }else {
+    } else {
       // this.comp.openLoginModal();
       $('#login-alert').show();
     }
@@ -132,19 +131,24 @@ export class ProductComponent implements OnInit {
     $('.alert').hide();
   }
 
-  createFacture() {
+  insertOrderAndRedirectToFacture() {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
-    this.facture.factureCode = this.orderProduct.factureCode;
+
+    this.orderProduct.orderCode = new Date().getTime().toString();
+    this.orderProduct.orderDate = moment().format('DD/MM/YYYY');
+
     if (this.currentUser) {
       if (this.orderProduct.quantity > 0) {
-        this.http.post(this.ROOT_URL + 'facture/insertFacture', this.facture).subscribe(
+        this.http.post(this.ROOT_URL + 'orderProduct/insertOrderProduct', this.orderProduct).subscribe(
           (data: any[]) => {
             console.log(data);
-            $('#facture-success-alert').show();
+            $('#order-success-alert').show();
+            this.router.navigate(['cart']);
           });
       }
-    }else {
+    } else {
+      // this.comp.openLoginModal();
       $('#login-alert').show();
     }
   }

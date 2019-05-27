@@ -7,6 +7,7 @@ import {CartComponent} from './cart.component';
   imports: [
     CommonModule
   ],
-  exports: [CartComponent]
+  exports: [CartComponent],
+  providers: []
 })
 export class CartModule { }

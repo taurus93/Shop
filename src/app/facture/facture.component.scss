@@ -158,3 +158,16 @@ $global-color: linear-gradient(-180deg,#f53d2d,#f63);
 .element-img {
   //float: left;
 }
+.shopee-border-delivery {
+  height: 0.1875rem;
+  width: 100%;
+  background-position-x: -1.875rem;
+  background-size: 7.25rem 0.1875rem;
+  background-image: repeating-linear-gradient(45deg, rgb(111, 166, 214), rgb(111, 166, 214) 33px, transparent 0px, transparent 41px, rgb(241, 141, 155) 0px, rgb(241, 141, 155) 74px, transparent 0px, transparent 82px);
+}
+.panel-custom {
+  width: 30%;
+}
+.content-facture-container {
+  display: flex;
+}

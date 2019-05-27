@@ -39,6 +39,7 @@ export class BodyComponent implements OnInit {
     this.images.push({source: '../assets/post3.jpg', alt: '', title: ''});
     this.user = {
       userName: '',
+      phoneNumber: '',
       userEmail: '',
       password: '',
       profile: '',

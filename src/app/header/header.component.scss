@@ -209,3 +209,18 @@ $global-color: linear-gradient(-180deg,#f53d2d,#f63);
 .no-overflow{
   overflow: auto;
 }
+.shopee-cart-number-badge {
+  position: relative;
+  border-radius: 2.75rem;
+  min-width: .6875rem;
+  line-height: 1.2em;
+  padding: 0 .3125rem;
+  text-align: center;
+  height: 1.4rem;
+  border: .125rem solid #ee4d2d;
+  color: #ee4d2d;
+  background-color: #fff;
+  left: 62.875rem;
+  top: -2.5rem;
+  margin-right: -.875rem;
+}

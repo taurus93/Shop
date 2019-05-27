@@ -6,8 +6,6 @@ import {AdminModule} from '../admin.module';
 import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {AppComponent} from '../../app.component';
 import {ProductMngComponent} from './product-mng.component';
-import {HeaderComponent} from "../../header/header.component";
-import {UploadComponent} from "../../upload/upload.component";
 
 @NgModule({
   declarations: [ProductMngComponent],
@@ -21,6 +19,6 @@ import {UploadComponent} from "../../upload/upload.component";
   ],
   bootstrap: [AppComponent],
   exports: [ProductMngComponent],
-  providers: [UploadComponent]
+  providers: []
 })
 export class ProductMngModule { }

@@ -5,11 +5,11 @@
   <!--<span class="txt2" [textContent]=item.productDescription></span>-->
   <!--</div>-->
   <!--</div>-->
-  <div class="ui-g-12 height-4 category-wrapper">
+  <div class="ui-g-12 height-4 category-wrapper" *ngIf="numberOfProduct > 0">
     <div class="cursor-pointer" *ngFor="let post of orders | async">
       <div class="container-product" *ngIf="post.status == 1">
         <div class="element-img">
-          <img src="../assets/{{post.productPicture}}" alt="">
+          <img src="../assets/images/{{post.productPicture}}" alt="">
         </div>
         <div class="element-content align-content-center">
           <span class="txt2" [textContent]=post.productDescription></span>
@@ -19,7 +19,7 @@
           <span class="txt2" [textContent]=post.quantity></span>
         </div>
         <div class="element-content align-content-center">
-          <span class="txt2" [textContent]=post.totalPrice></span>
+          <span class="txt2">{{post.totalPrice | currency:'VND':false:'1.2-2'}}</span>
           <span class="txt2"> đ</span>
         </div>
         <div class="element-content align-content-center" *ngIf="post.status == 2">
@@ -42,6 +42,11 @@
       <span class="txt2">): </span>
       <span class="txt2">{{ totalPriceAll | currency:'VND':false:'1.2-2' }}</span>
       <button type="button" class="btn btn-warning" (click)="createFactureAll()">MUA HÀNG</button>
+    </div>
+  </div>
+  <div class="container" *ngIf="numberOfProduct <= 0">
+    <div>
+      <span>Giỏ hàng của bạn còn trống</span>
     </div>
   </div>
 </div>

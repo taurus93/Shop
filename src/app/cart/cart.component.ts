@@ -7,6 +7,8 @@ import {User} from '../model/User';
 import {AuthenticationService} from '../service/authentication.service';
 import {OrderProduct} from '../model/OrderProduct';
 import {Facture} from '../model/Facture';
+import {HeaderComponent} from '../header/header.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -25,7 +27,9 @@ export class CartComponent implements OnInit {
   numberOfProduct: number = 0.00;
   public orderList: OrderProduct[] = [];
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
+  constructor(private http: HttpClient,
+              private authenticationService: AuthenticationService,
+              private router: Router) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
@@ -40,24 +44,32 @@ export class CartComponent implements OnInit {
         totalPrice: this.totalPriceAll,
         status: 1
       };
-      this.orders = this.getAllOrder();
-      this.orders.forEach(order => {
-        if (order.length === 0) {
-          this.showPayAllBtn = false;
-        } else {
-          this.showPayAllBtn = true;
-        }
-        for(var i=0; i<order.length; i++) {
-          if(order[i].status == 1) {
-            this.totalPriceAll += order[i].totalPrice;
-            this.numberOfProduct++;
-            this.facture.totalPrice += order[i].totalPrice;
-            this.facture.quantity++;
-            this.orderList.push(order[i]);
-          }
-        }
-      });
+      this.getListOrder();
     }
+  }
+
+  getListOrder() {
+    this.orders = this.getAllOrder();
+    this.totalPriceAll = 0;
+    this.facture.totalPrice = 0;
+    this.facture.quantity = 0;
+    this.orders.forEach(order => {
+      if (order.length === 0) {
+        this.showPayAllBtn = false;
+      } else {
+        this.showPayAllBtn = true;
+      }
+      for (var i = 0; i < order.length; i++) {
+        if (order[i].status == 1) {
+          this.totalPriceAll += order[i].totalPrice;
+          this.numberOfProduct++;
+          this.facture.totalPrice += order[i].totalPrice;
+          this.facture.quantity++;
+          this.orderList.push(order[i]);
+        }
+      }
+    });
+    this.router.navigate(['cart']);
   }
 
   getAllOrder(): Observable<OrderProduct[]> {
@@ -87,8 +99,8 @@ export class CartComponent implements OnInit {
     //   for (const value of order) {
     //     this.facture.factureCode = new Date().getTime().toString();
     //     const obj = {
-    //       "facture": this.facture,
-    //       "orderList": this.orderList
+    //       'facture': this.facture,
+    //       'orderList': this.orderList
     //     };
     //     this.http.post(this.ROOT_URL + 'facture/insertFacture', JSON.stringify(obj)).subscribe(
     //       (data: any[]) => {
@@ -96,16 +108,18 @@ export class CartComponent implements OnInit {
     //       });
     //   }
     // });
-    this.facture.factureCode = new Date().getTime().toString();
-    const obj = {
-      "facture": this.facture,
-      "orderList": this.orderList
-    };
-    this.http.post(this.ROOT_URL + 'facture/insertFacture', JSON.stringify(obj)).subscribe(
-      (data: any[]) => {
-        console.log(data);
-      });
-    this.orders = this.getAllOrder();
+    if (this.numberOfProduct > 0) {
+      this.facture.factureCode = new Date().getTime().toString();
+      const obj = {
+        'facture': this.facture,
+        'orderList': this.orderList
+      };
+      this.http.post(this.ROOT_URL + 'facture/insertFacture', JSON.stringify(obj)).subscribe(
+        (data: any[]) => {
+          console.log(data);
+        });
+      this.orders = this.getAllOrder();
+    }
   }
 
   delete(item) {
@@ -114,14 +128,16 @@ export class CartComponent implements OnInit {
     this.http.get<any[]>(this.ROOT_URL + 'orderProduct/deleteOrderProduct?orderProductCode=' + item.orderCode, {headers}).subscribe(
       (data: any[]) => {
         this.orders = this.getAllOrder();
+        this.orders.forEach(order => {
+          if (order.length === 0) {
+            this.showPayAllBtn = false;
+          } else {
+            this.showPayAllBtn = true;
+          }
+          this.getListOrder();
+        });
       }
     );
 
-    this.orders.forEach(order => {
-      if (order.length === 0) {
-        this.showPayAllBtn = false;
-      } else {
-        this.showPayAllBtn = true;
-      }
-    });
-  }}
+  }
+}

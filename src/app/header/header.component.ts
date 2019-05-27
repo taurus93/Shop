@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Injectable} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Category} from '../model/Category';
@@ -9,17 +9,22 @@ import {AuthenticationService} from '../service/authentication.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MustMatch} from '../_helpers/must-match.validator';
 import * as $ from 'jquery';
+import {OrderProduct} from '../model/OrderProduct';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
+@Injectable()
 export class HeaderComponent implements OnInit {
   items: MenuItem[];
   categories: Observable<Category[]>;
   products: Observable<Product[]>;
   users: Observable<User[]>;
+  listOrderByUser: Observable<OrderProduct[]>;
+  numberOfOrder = 0;
+  isExistOrder: boolean;
   images: any[];
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
   display = false;
@@ -35,6 +40,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       userName: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
       userEmail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       profile: ['', Validators.required],
@@ -52,12 +58,14 @@ export class HeaderComponent implements OnInit {
     ];
     this.categories = this.getAllCategory();
     this.products = this.getAllProduct();
+    this.getOrderProduct();
     this.images = [];
     this.images.push({source: '../assets/post1.jpg', alt: '', title: ''});
     this.images.push({source: '../assets/post2.jpg', alt: '', title: ''});
     this.images.push({source: '../assets/post3.jpg', alt: '', title: ''});
     this.user = this.userTmp = {
       userName: '',
+      phoneNumber: '',
       userEmail: '',
       password: '',
       profile: '',
@@ -88,6 +96,27 @@ export class HeaderComponent implements OnInit {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
     return this.http.get<Category[]>(this.ROOT_URL + 'category/getAllCategory', {headers});
+  }
+  calculateNumberOfOrder() {
+
+  }
+  getOrderProduct() {
+    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    this.http.get<Observable<OrderProduct[]>>(this.ROOT_URL + 'orderProduct/getOrderProduct?userEmail='
+      + this.currentUser.userEmail, {headers}).subscribe(
+      (data: Observable<OrderProduct[]>) => {
+        this.listOrderByUser = data;
+        this.listOrderByUser.forEach(a => {
+          // @ts-ignore
+          if (1 === a.status) {
+            this.numberOfOrder += 1;
+            this.isExistOrder = true;
+          }
+        });
+      }
+    );
+
   }
 
   getAllProduct(): Observable<Product[]> {
@@ -127,6 +156,7 @@ export class HeaderComponent implements OnInit {
     // const result = this.http.post(this.ROOT_URL + 'user/insertUser', this.user, {headers});
 
     this.userTmp.userName = this.form.value.userName;
+    this.userTmp.phoneNumber = this.form.value.phoneNumber;
     this.userTmp.userEmail = this.form.value.userEmail;
     this.userTmp.password = this.form.value.password;
     this.userTmp.profile = this.form.value.profile;

@@ -47,6 +47,7 @@ export class UserComponent implements OnInit {
     }
     this.form = this.formBuilder.group({
       userName: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
       userEmail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       profile: ['', Validators.required],
@@ -57,6 +58,7 @@ export class UserComponent implements OnInit {
     });
     this.formCreate = this.formBuilder.group({
       userName: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
       userEmail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       profile: ['', Validators.required],
@@ -67,6 +69,7 @@ export class UserComponent implements OnInit {
     });
     this.itemTmp = {
       userName: '',
+      phoneNumber: '',
       userEmail: '',
       password: '',
       profile: '',
@@ -92,6 +95,7 @@ export class UserComponent implements OnInit {
     this.itemSelected = item;
     this.form.setValue({
       userName: item.userName,
+      phoneNumber: item.phoneNumber,
       userEmail: item.userEmail,
       password: item.password,
       profile: item.profile,
@@ -115,6 +119,7 @@ export class UserComponent implements OnInit {
   openCreateModal() {
     this.formCreate.setValue({
       userName: '',
+      phoneNumber: '',
       userEmail: '',
       password: '',
       profile: '',
@@ -135,6 +140,7 @@ export class UserComponent implements OnInit {
     }
 
     this.itemSelected.userName = this.form.value.userName;
+    this.itemSelected.phoneNumber = this.form.value.phoneNumber;
     this.itemSelected.userEmail = this.form.value.userEmail;
     this.itemSelected.password = this.form.value.password;
     this.itemSelected.profile = this.form.value.profile;
@@ -177,6 +183,7 @@ export class UserComponent implements OnInit {
     }
 
     this.itemTmp.userName = this.formCreate.value.userName;
+    this.itemTmp.phoneNumber = this.formCreate.value.phoneNumber;
     this.itemTmp.userEmail = this.formCreate.value.userEmail;
     this.itemTmp.password = this.formCreate.value.password;
     this.itemTmp.profile = this.formCreate.value.profile;

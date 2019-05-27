@@ -5,9 +5,7 @@ import {User} from '../../model/User';
 import {HttpClient, HttpEventType, HttpHeaders, HttpResponse} from '@angular/common/http';
 import * as $ from 'jquery';
 import {Product} from '../../model/Product';
-import {Category} from "../../model/Category";
-import {HeaderComponent} from "../../header/header.component";
-import {UploadComponent} from "../../upload/upload.component";
+import {Category} from '../../model/Category';
 
 @Component({
   selector: 'app-product-mng',
@@ -28,7 +26,7 @@ export class ProductMngComponent implements OnInit {
   files: File[];
   listUser: Observable<User[]>;
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, private uploadComponent: UploadComponent) {
+  constructor(private http: HttpClient, private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -66,10 +64,12 @@ export class ProductMngComponent implements OnInit {
 
     return this.http.get<Product[]>(this.ROOT_URL + 'product/getAllProduct', {headers});
   }
+
   // convenience getter for easy access to form fields
   get f() {
     return this.form.controls;
   }
+
   get fCreate() {
     return this.formCreate.controls;
   }
@@ -149,10 +149,10 @@ export class ProductMngComponent implements OnInit {
     this.itemTmp.productPicture = this.files[0].name;
     this.itemTmp.productDescription = this.formCreate.value.productDescription;
     this.categories.forEach(a => {
-      for(var i=0; i<a.length; i++) {
-        if(a[i].categoryName == this.formCreate.value.categoryCode) {
+      for ( var i = 0; i < a.length; i++) {
+        if (a[i].categoryName === this.formCreate.value.categoryCode) {
           this.itemTmp.categoryCode = a[i].categoryCode;
-          this.http.post(this.ROOT_URL + 'orderProduct/insertOrderProduct', this.itemTmp).subscribe(
+          this.http.post(this.ROOT_URL + 'product/insertProduct', this.itemTmp).subscribe(
             (data: any[]) => {
               this.items = this.getAll();
             });
@@ -173,7 +173,7 @@ export class ProductMngComponent implements OnInit {
 
       reader.onload = (event) => { // called once readAsDataURL is completed
         // this.url = event.target.result;
-      }
+      };
     }
   }
 
@@ -182,35 +182,35 @@ export class ProductMngComponent implements OnInit {
   percentDone: number;
   uploadSuccess: boolean;
 
-  version = VERSION
+  version = VERSION;
 
-  upload(files: File[]){
+  upload(files: File[]) {
     //pick from one of the 4 styles of file uploads below
     this.files = files;
   }
 
-  basicUpload(files: File[]){
+  basicUpload(files: File[]) {
     var formData = new FormData();
-    Array.from(files).forEach(f => formData.append('file', f))
+    Array.from(files).forEach(f => formData.append('file', f));
     this.http.post('http://localhost:8007/uploadFile', formData)
       .subscribe(event => {
-        console.log('done')
-      })
+        console.log('done');
+      });
   }
 
   //this will fail since file.io dosen't accept this type of upload
   //but it is still possible to upload a file with this style
-  basicUploadSingle(file: File){
+  basicUploadSingle(file: File) {
     this.http.post('http://localhost:8007/uploadFile', file)
       .subscribe(event => {
-        console.log('done')
-      })
+        console.log('done');
+      });
   }
 
-  uploadAndProgress(files: File[]){
-    console.log(files)
+  uploadAndProgress(files: File[]) {
+    console.log(files);
     var formData = new FormData();
-    Array.from(files).forEach(f => formData.append('file',f));
+    Array.from(files).forEach(f => formData.append('file', f));
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
     // this.http.post('http://localhost:8007/uploadFile', { file: files }, {reportProgress: true, observe: 'events'})
@@ -235,7 +235,7 @@ export class ProductMngComponent implements OnInit {
 
   //this will fail since file.io dosen't accept this type of upload
   //but it is still possible to upload a file with this style
-  uploadAndProgressSingle(file: File){
+  uploadAndProgressSingle(file: File) {
     this.http.post('http://localhost:8007/uploadFile', file, {reportProgress: true, observe: 'events'})
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
