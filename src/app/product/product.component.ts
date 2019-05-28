@@ -31,6 +31,7 @@ export class ProductComponent implements OnInit {
   facture: Facture;
   currentUserSubscription: Subscription;
   currentUser: User;
+  listTextDescription: string[];
 
   constructor(private http: HttpClient, private route: ActivatedRoute,
               private authenticationService: AuthenticationService, private router: Router) {
@@ -101,6 +102,7 @@ export class ProductComponent implements OnInit {
       (data: any[]) => {
         if (data.length) {
           this.product = data[0];
+          this.listTextDescription = this.product.productDescription.split("+");
         }
       }
     );

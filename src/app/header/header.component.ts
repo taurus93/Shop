@@ -92,6 +92,12 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  message:string;
+
+  receiveMessage($event) {
+    this.message = $event
+  }
+
   getAllCategory(): Observable<Category[]> {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 

@@ -6,6 +6,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthenticationService} from '../service/authentication.service';
 import {FormBuilder} from '@angular/forms';
 import {User} from '../model/User';
+import {AppComponent} from "../app.component";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-admin',
@@ -39,7 +41,9 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService,
+              private formBuilder: FormBuilder,
+              private appComponent: AppComponent) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
     });

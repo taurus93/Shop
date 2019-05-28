@@ -1,4 +1,4 @@
-import {Component, OnInit, Pipe} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, Pipe} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {Product} from '../model/Product';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -9,8 +9,10 @@ import {OrderProduct} from '../model/OrderProduct';
 import {Facture} from '../model/Facture';
 import {HeaderComponent} from '../header/header.component';
 import {Router} from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
+  providers:[HeaderComponent],
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
@@ -26,10 +28,14 @@ export class CartComponent implements OnInit {
   totalPriceAll: number = 0.00;
   numberOfProduct: number = 0.00;
   public orderList: OrderProduct[] = [];
+  listTextDescription: Map<string, string[]> = new Map([]);
+
+  @Output() messageEvent = new EventEmitter<string>();
 
   constructor(private http: HttpClient,
               private authenticationService: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private headerComponent: HeaderComponent) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
@@ -66,10 +72,13 @@ export class CartComponent implements OnInit {
           this.facture.totalPrice += order[i].totalPrice;
           this.facture.quantity++;
           this.orderList.push(order[i]);
+          var splitDes = order[i].productDescription.split('+');
+          this.listTextDescription.set(order[i].productCode, splitDes);
         }
       }
+      this.headerComponent.numberOfOrder = this.orderList.length;
     });
-    this.router.navigate(['cart']);
+    // this.router.navigate(['cart']);
   }
 
   getAllOrder(): Observable<OrderProduct[]> {
@@ -140,4 +149,5 @@ export class CartComponent implements OnInit {
     );
 
   }
+
 }

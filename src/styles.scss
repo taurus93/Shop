@@ -6,3 +6,15 @@
 .hide {
   display: none;
 }
+.container-custom {
+  min-height: 500px;
+}
+.center-parent {
+  text-align: center;
+}
+.center-me {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 400px;
+}

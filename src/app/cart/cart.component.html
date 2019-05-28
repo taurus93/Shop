@@ -1,5 +1,4 @@
-<app-header></app-header>
-<div class="ui-g container list-product">
+<div class="ui-g container container-custom list-product">
   <!--<div class="height-4 no-padding model-wrapper">-->
   <!--<div class="element" *ngFor="let item of product | async">-->
   <!--<span class="txt2" [textContent]=item.productDescription></span>-->
@@ -11,8 +10,16 @@
         <div class="element-img">
           <img src="../assets/images/{{post.productPicture}}" alt="">
         </div>
-        <div class="element-content align-content-center">
-          <span class="txt2" [textContent]=post.productDescription></span>
+        <div class="element-content align-content-center overflow-custom">
+          <!--<span class="txt2" [textContent]=post.productDescription></span>-->
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let des of listTextDescription.get(post.productCode)">
+              <span class="txt2" [textContent]=des></span>
+            </li>
+          </ul>
+          <!--<div class="description" *ngFor="let des of listTextDescription.get(post.productCode)">-->
+            <!--<span class="txt2" [textContent]=des></span>-->
+          <!--</div>-->
         </div>
         <div class="element-content align-content-center">
           <span class="txt2">Số lượng: </span>
@@ -45,8 +52,15 @@
     </div>
   </div>
   <div class="container" *ngIf="numberOfProduct <= 0">
-    <div>
-      <span>Giỏ hàng của bạn còn trống</span>
+    <div class="center-parent">
+      <div class="center-me">
+        <div class="">
+          <span class="">Giỏ hàng của bạn còn trống</span>
+        </div>
+        <div class="">
+          <button type="button" class="btn btn-info" [routerLink]="['/home']">Mua Ngay</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

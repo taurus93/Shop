@@ -15,8 +15,7 @@ import {CategoryMngComponent} from './admin/category-mng/category-mng.component'
 
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
     RouterModule.forRoot([
       {path: 'header', component: HeaderComponent},

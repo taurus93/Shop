@@ -162,8 +162,8 @@ $global-color: linear-gradient(-180deg,#f53d2d,#f63);
   text-align: center;
 }
 .submit-order {
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  bottom: 328px;
 }
 .container-product {
   display: flex;
@@ -171,4 +171,11 @@ $global-color: linear-gradient(-180deg,#f53d2d,#f63);
 }
 .element-img img{
   max-width: 51px;
+}
+.description {
+  text-align: left;
+}
+.overflow-custom {
+  max-height: 60px;
+  overflow: auto;
 }

@@ -1,30 +1,32 @@
-<div class="ui-g container">
-  <div class="ui-g-9">
-    <p-galleria [images]="images" panelWidth="860" panelHeight="313" [showCaption]="false"></p-galleria>
-  </div>
-  <div class="ui-g-3 img-panel-wrapper">
-    <img class="img" src="../assets/post1.jpg" alt="">
-    <img src="../assets/post2.jpg" alt="">
-    <div class="img-panel-2"></div>
-  </div>
-</div>
-<div class="ui-g container list-product">
-  <!--<div class="height-4 no-padding model-wrapper">-->
-  <!--<div class="element" *ngFor="let item of product | async">-->
-  <!--<span class="txt2" [textContent]=item.productDescription></span>-->
-  <!--</div>-->
-  <!--</div>-->
-  <div class="height-4 no-padding category-wrapper">
-    <div class="element-product cursor-pointer" [routerLink]="['/product', post.productCode]" *ngFor="let post of products | async">
-      <div class="element-img">
-        <img src="../assets/images/{{post.productPicture}}" alt="">
-      </div>
-      <div class="element-content">
-        <span class="txt2 truncate" [textContent]=post.productDescription></span>
-      </div>
+<div class="container-custom">
+  <div class="ui-g container">
+    <div class="ui-g-9">
+      <p-galleria [images]="images" panelWidth="860" panelHeight="313" [showCaption]="false"></p-galleria>
+    </div>
+    <div class="ui-g-3 img-panel-wrapper">
+      <img class="img" src="../assets/post1.jpg" alt="">
+      <img src="../assets/post2.jpg" alt="">
+      <div class="img-panel-2"></div>
     </div>
   </div>
-  <p-dialog header="Title" [(visible)]="display">
-    Content
-  </p-dialog>
+  <div class="ui-g container list-product">
+    <!--<div class="height-4 no-padding model-wrapper">-->
+    <!--<div class="element" *ngFor="let item of product | async">-->
+    <!--<span class="txt2" [textContent]=item.productDescription></span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="height-4 no-padding category-wrapper">
+      <div class="element-product cursor-pointer" [routerLink]="['/product', post.productCode]" *ngFor="let post of products | async">
+        <div class="element-img">
+          <img src="../assets/images/{{post.productPicture}}" alt="">
+        </div>
+        <div class="element-content">
+          <span class="txt2 truncate" [textContent]=post.productDescription></span>
+        </div>
+      </div>
+    </div>
+    <p-dialog header="Title" [(visible)]="display">
+      Content
+    </p-dialog>
+  </div>
 </div>

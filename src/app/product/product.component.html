@@ -1,12 +1,11 @@
-<app-header></app-header>
-<div class="wrapper">
+<div class="wrapper container-custom">
   <div class="ui-g container">
     <div class="element-img ui-g-6">
       <img src="../assets/images/{{product.productPicture}}" alt="">
     </div>
     <div class="element-content ui-g-5">
-      <div class="description">
-        <span class="txt2" [textContent]=product.productDescription></span>
+      <div class="description" *ngFor="let des of listTextDescription">
+        <span class="txt2" [textContent]=des></span>
       </div>
       <div>
         <div class="jumbotron height-5 no-padding">
