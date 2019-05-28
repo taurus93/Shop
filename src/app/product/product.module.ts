@@ -7,6 +7,7 @@ import {HeaderModule} from '../header/header.module';
 import {HeaderComponent} from '../header/header.component';
 import {BodyModule} from '../body/body.module';
 import { FormsModule } from '@angular/forms';
+import {FooterModule} from "../footer/footer.module";
 
 @NgModule({
   declarations: [ProductComponent],
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     ProductRoutingModule,
     HeaderModule,
     BodyModule,
-    FormsModule
+    FormsModule,
+    FooterModule
   ],
   bootstrap: [AppComponent]
 })

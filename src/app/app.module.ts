@@ -19,13 +19,14 @@ import {OrderMngModule} from './admin/order-mng/order-mng.module';
 import {FactureMngModule} from './admin/facture-mng/facture-mng.module';
 import {CategoryMngModule} from './admin/category-mng/category-mng.module';
 import { FooterComponent } from './footer/footer.component';
+import {FormsModule} from "@angular/forms";
+import {FooterModule} from "./footer/footer.module";
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CartComponent,
-    FactureComponent,
-    FooterComponent
+    FactureComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +42,8 @@ import { FooterComponent } from './footer/footer.component';
     PaymentMngModule,
     OrderMngModule,
     FactureMngModule,
-    CategoryMngModule
+    CategoryMngModule,
+    FooterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

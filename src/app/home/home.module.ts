@@ -5,6 +5,7 @@ import {BodyModule} from '../body/body.module';
 import {ProductModule} from '../product/product.module';
 import {HomeComponent} from './home.component';
 import {AppComponent} from '../app.component';
+import {FooterModule} from "../footer/footer.module";
 
 @NgModule({
   declarations: [HomeComponent],
@@ -12,7 +13,8 @@ import {AppComponent} from '../app.component';
     CommonModule,
     HeaderModule,
     BodyModule,
-    ProductModule
+    ProductModule,
+    FooterModule
   ],
   bootstrap: [AppComponent],
   exports: [
