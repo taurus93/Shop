@@ -33,7 +33,7 @@ export class FactureComponent implements OnInit {
         userEmail: this.currentUser.userEmail,
         quantity: 0,
         totalPrice: 0,
-        status: 1
+        status: ''
       };
     }
   }

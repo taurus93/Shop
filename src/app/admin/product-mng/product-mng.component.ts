@@ -21,6 +21,7 @@ export class ProductMngComponent implements OnInit {
   itemTmp: Product;
   status: 0;
   categories: Observable<Category[]>;
+  submitted: boolean = false;
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
   url = '';
   files: File[];
@@ -122,6 +123,10 @@ export class ProductMngComponent implements OnInit {
   onSubmit() {
 
     // stop here if form is invalid
+    this.submitted = true;
+    if(this.form.invalid) {
+      return;
+    }
 
     this.itemSelected.productCode = this.form.value.productCode;
     this.itemSelected.productName = this.form.value.productName;
@@ -142,6 +147,10 @@ export class ProductMngComponent implements OnInit {
 
     // stop here if form is invalid
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+    this.submitted = true;
+    if(this.formCreate.invalid) {
+      return;
+    }
 
     this.itemTmp.productCode = this.formCreate.value.productCode;
     this.itemTmp.productName = this.formCreate.value.productName;

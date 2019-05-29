@@ -47,7 +47,7 @@
               </div>
               <div class="form-group">
                 <label>Giá</label>
-                <input type="number" formControlName="productPrice" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.productPrice.errors }" />
+                <input type="number" formControlName="productPrice" class="form-control" aria-label="amount" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.productPrice.errors }" />
                 <div *ngIf="submitted && f.productPrice.errors" class="invalid-feedback">
                   <div *ngIf="f.productPrice.errors.required">Trường này không được để trống</div>
                   <div *ngIf="f.productPrice.errors.minlength">Trường này không được để trống</div>
@@ -55,7 +55,8 @@
               </div>
               <div class="form-group">
                 <label>Ảnh</label>
-                <input type="text" formControlName="productPicture" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productPicture.errors }" />
+                <input type="file" formControlName="productPicture" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productPicture.errors }" (change)="upload($event.target.files)" />
+                <img src="../../assets/images/{{f.productPicture}}" alt="">
                 <div *ngIf="submitted && f.productPicture.errors" class="invalid-feedback">
                   <div *ngIf="f.productPicture.errors.required">Trường này không được để trống</div>
                 </div>
@@ -75,7 +76,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <button class="btn btn-primary">Tạo sản phẩm</button>
+                <button class="btn btn-primary">Sửa sản phẩm</button>
               </div>
             </form>
           </div>
@@ -91,7 +92,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Sửa sản phẩm</h4>
+          <h4 class="modal-title w-100 font-weight-bold">Thêm sản phẩm</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -101,56 +102,52 @@
             <form class="form-custom" [formGroup]="formCreate" (ngSubmit)="onSubmitCreate()">
               <div class="form-group">
                 <label>Mã sản phẩm</label>
-                <input type="text" formControlName="productCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productCode.errors }" />
-                <div *ngIf="submitted && f.productCode.errors" class="invalid-feedback">
-                  <div *ngIf="f.productCode.errors.required">Trường này không được để trống</div>
+                <input type="text" formControlName="productCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && fCreate.productCode.errors }" />
+                <div *ngIf="submitted && fCreate.productCode.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.productCode.errors.required">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
                 <label>Tên sản phẩm</label>
-                <input type="text" formControlName="productName" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.productName.errors }" />
-                <div *ngIf="submitted && f.productName.errors" class="invalid-feedback">
-                  <div *ngIf="f.productName.errors.required">Trường này không được để trống</div>
-                  <div *ngIf="f.productName.errors.productName">Trường này không được để trống</div>
+                <input type="text" formControlName="productName" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && fCreate.productName.errors }" />
+                <div *ngIf="submitted && fCreate.productName.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.productName.errors.required">Trường này không được để trống</div>
+                  <div *ngIf="fCreate.productName.errors.productName">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
                 <label>Giá</label>
-                <input type="number" formControlName="productPrice" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.productPrice.errors }" />
-                <div *ngIf="submitted && f.productPrice.errors" class="invalid-feedback">
-                  <div *ngIf="f.productPrice.errors.required">Trường này không được để trống</div>
-                  <div *ngIf="f.productPrice.errors.minlength">Trường này không được để trống</div>
+                <input type="number" formControlName="productPrice" class="form-control" aria-label="amount" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && fCreate.productPrice.errors }" />
+                <div *ngIf="submitted && fCreate.productPrice.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.productPrice.errors.required">Trường này không được để trống</div>
+                  <div *ngIf="fCreate.productPrice.errors.minlength">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
                 <label>Ảnh</label>
-                <input type="file" formControlName="productPicture" class="form-control" (change)="upload($event.target.files)" />
-                Upload Percent: {{percentDone}}% <br />
-
-                <ng-container *ngIf="uploadSuccess">
-                  Upload Successful
-                </ng-container>
-                <div *ngIf="submitted && f.productPicture.errors" class="invalid-feedback">
-                  <div *ngIf="f.productPicture.errors.required">Trường này không được để trống</div>
+                <input type="file" formControlName="productPicture" class="form-control" [ngClass]="{ 'is-invalid': submitted && fCreate.productPicture.errors }" (change)="upload($event.target.files)" />
+                <img src="../../assets/images/{{fCreate.productPicture}}" alt="">
+                <div *ngIf="submitted && fCreate.productPicture.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.productPicture.errors.required">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
                 <label>Mô tả</label>
-                <input type="text" formControlName="productDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productDescription.errors }" />
-                <div *ngIf="submitted && f.productDescription.errors" class="invalid-feedback">
-                  <div *ngIf="f.productDescription.errors.required">Trường này không được để trống</div>
+                <input type="text" formControlName="productDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && fCreate.productDescription.errors }" />
+                <div *ngIf="submitted && fCreate.productDescription.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.productDescription.errors.required">Trường này không được để trống</div>
                 </div>
               </div>
               <div class="form-group">
                 <label>Loại sản phẩm</label>
-                <select class="browser-default custom-select" formControlName="categoryCode" [ngClass]="{ 'is-invalid': submitted && f.profile.errors }">
+                <select class="browser-default custom-select" formControlName="categoryCode" [ngClass]="{ 'is-invalid': submitted && fCreate.profile.errors }">
                   <option selected *ngFor="let item of categories | async">
                     <span class="txt" [textContent]=item.categoryName (click)="selectCategory(item)"></span>
                   </option>
                 </select>
               </div>
               <div class="form-group">
-                <button class="btn btn-primary">submit</button>
+                <button class="btn btn-primary">Tạo sản phẩm</button>
               </div>
             </form>
           </div>

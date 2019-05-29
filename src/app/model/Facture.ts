@@ -3,5 +3,5 @@ export interface Facture {
   userEmail: string;
   quantity: number;
   totalPrice: number;
-  status: number;
+  status: string;
 }

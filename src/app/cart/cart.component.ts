@@ -48,7 +48,7 @@ export class CartComponent implements OnInit {
         userEmail: this.currentUser.userEmail,
         quantity: this.numberOfProduct,
         totalPrice: this.totalPriceAll,
-        status: 1
+        status: ''
       };
       this.getListOrder();
     }
@@ -126,8 +126,9 @@ export class CartComponent implements OnInit {
       this.http.post(this.ROOT_URL + 'facture/insertFacture', JSON.stringify(obj)).subscribe(
         (data: any[]) => {
           console.log(data);
+          this.orders = this.getAllOrder();
+          this.router.navigateByUrl('/payment/'+this.facture.factureCode);
         });
-      this.orders = this.getAllOrder();
     }
   }
 
@@ -144,6 +145,8 @@ export class CartComponent implements OnInit {
             this.showPayAllBtn = true;
           }
           this.getListOrder();
+          this.router.navigate(['home']);
+          this.router.navigate(['cart']);
         });
       }
     );
