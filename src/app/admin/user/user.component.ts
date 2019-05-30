@@ -52,9 +52,10 @@ export class UserComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       profile: ['', Validators.required],
       street: ['', Validators.required],
-      suburb: ['', Validators.required],
+      county: ['', Validators.required],
       city: ['', Validators.required],
       postcode: ['', Validators.required],
+      wards: ['', Validators.required],
     });
     this.formCreate = this.formBuilder.group({
       userName: ['', Validators.required],
@@ -63,9 +64,10 @@ export class UserComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       profile: ['', Validators.required],
       street: ['', Validators.required],
-      suburb: ['', Validators.required],
+      county: ['', Validators.required],
       city: ['', Validators.required],
       postcode: ['', Validators.required],
+      wards: ['', Validators.required],
     });
     this.itemTmp = {
       userName: '',
@@ -74,9 +76,10 @@ export class UserComponent implements OnInit {
       password: '',
       profile: '',
       street: '',
-      suburb: '',
+      county: '',
       city: '',
-      postcode: ''
+      postcode: '',
+      wards: ''
     };
   }
 
@@ -100,9 +103,10 @@ export class UserComponent implements OnInit {
       password: item.password,
       profile: item.profile,
       street: item.street,
-      suburb: item.suburb,
+      county: item.county,
       city: item.city,
-      postcode: item.postcode
+      postcode: item.postcode,
+      wards: item.wards
     });
   }
 
@@ -124,9 +128,10 @@ export class UserComponent implements OnInit {
       password: '',
       profile: '',
       street: '',
-      suburb: '',
+      county: '',
       city: '',
-      postcode: ''
+      postcode: '',
+      wards: ''
     });
   }
 
@@ -145,9 +150,10 @@ export class UserComponent implements OnInit {
     this.itemSelected.password = this.form.value.password;
     this.itemSelected.profile = this.form.value.profile;
     this.itemSelected.street = this.form.value.street;
-    this.itemSelected.suburb = this.form.value.suburb;
+    this.itemSelected.county = this.form.value.county;
     this.itemSelected.city = this.form.value.city;
     this.itemSelected.postcode = this.form.value.postcode;
+    this.itemSelected.wards = this.form.value.wards;
 
     if (this.itemSelected.profile === 'Người dùng') {
       this.itemSelected.profile = 'user';
@@ -188,9 +194,10 @@ export class UserComponent implements OnInit {
     this.itemTmp.password = this.formCreate.value.password;
     this.itemTmp.profile = this.formCreate.value.profile;
     this.itemTmp.street = this.formCreate.value.street;
-    this.itemTmp.suburb = this.formCreate.value.suburb;
+    this.itemTmp.county = this.formCreate.value.county;
     this.itemTmp.city = this.formCreate.value.city;
     this.itemTmp.postcode = this.formCreate.value.postcode;
+    this.itemTmp.wards = this.formCreate.value.wards;
 
     if (this.itemTmp.profile === 'Người dùng') {
       this.itemTmp.profile = 'user';

@@ -176,9 +176,9 @@
             </div>
             <div class="form-group">
               <label class="label-custom">Quận</label>
-              <input type="text" formControlName="suburb" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.suburb.errors }" />
-              <div *ngIf="submitted && f.suburb.errors" class="invalid-feedback">
-                <div *ngIf="f.suburb.errors.required">Trường này không được trống</div>
+              <input type="text" formControlName="county" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.county.errors }" />
+              <div *ngIf="submitted && f.county.errors" class="invalid-feedback">
+                <div *ngIf="f.county.errors.required">Trường này không được trống</div>
               </div>
             </div>
             <div class="form-group">
@@ -193,6 +193,13 @@
               <input type="text" formControlName="postcode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.postcode.errors }" />
               <div *ngIf="submitted && f.postcode.errors" class="invalid-feedback">
                 <div *ngIf="f.postcode.errors.required">Trường này không được trống</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="label-custom">Xã/Phường</label>
+              <input type="text" formControlName="wards" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.wards.errors }" />
+              <div *ngIf="submitted && f.wards.errors" class="invalid-feedback">
+                <div *ngIf="f.wards.errors.required">Trường này không được trống</div>
               </div>
             </div>
           </form>

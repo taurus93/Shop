@@ -45,9 +45,10 @@ export class HeaderComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       profile: ['', Validators.required],
       street: ['', Validators.required],
-      suburb: ['', Validators.required],
+      county: ['', Validators.required],
       city: ['', Validators.required],
       postcode: ['', Validators.required],
+      wards: ['', Validators.required],
     });
     this.items = [
       {label: 'Stats', icon: 'fa fa-fw fa-bar-chart'},
@@ -70,9 +71,10 @@ export class HeaderComponent implements OnInit {
       password: '',
       profile: '',
       street: '',
-      suburb: '',
+      county: '',
       city: '',
-      postcode: ''
+      postcode: '',
+      wards: ''
     };
     try {
       this.authenticationService.update(this.currentUser.userEmail);
@@ -109,19 +111,21 @@ export class HeaderComponent implements OnInit {
   getOrderProduct() {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
-    this.http.get<Observable<OrderProduct[]>>(this.ROOT_URL + 'orderProduct/getOrderProduct?userEmail='
-      + this.currentUser.userEmail, {headers}).subscribe(
-      (data: Observable<OrderProduct[]>) => {
-        this.listOrderByUser = data;
-        this.listOrderByUser.forEach(a => {
-          // @ts-ignore
-          if (1 === a.status) {
-            this.numberOfOrder += 1;
-            this.isExistOrder = true;
-          }
-        });
-      }
-    );
+    if(this.currentUser) {
+      this.http.get<Observable<OrderProduct[]>>(this.ROOT_URL + 'orderProduct/getOrderProduct?userEmail='
+        + this.currentUser.userEmail, {headers}).subscribe(
+        (data: Observable<OrderProduct[]>) => {
+          this.listOrderByUser = data;
+          this.listOrderByUser.forEach(a => {
+            // @ts-ignore
+            if (1 === a.status) {
+              this.numberOfOrder += 1;
+              this.isExistOrder = true;
+            }
+          });
+        }
+      );
+    }
 
   }
 
@@ -167,9 +171,10 @@ export class HeaderComponent implements OnInit {
     this.userTmp.password = this.form.value.password;
     this.userTmp.profile = this.form.value.profile;
     this.userTmp.street = this.form.value.street;
-    this.userTmp.suburb = this.form.value.suburb;
+    this.userTmp.county = this.form.value.county;
     this.userTmp.city = this.form.value.city;
     this.userTmp.postcode = this.form.value.postcode;
+    this.userTmp.wards = this.form.value.wards;
 
     if (this.userTmp.profile === 'Người dùng') {
       this.userTmp.profile = 'user';

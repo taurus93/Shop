@@ -5,7 +5,8 @@ export interface User {
   password: string;
   profile: string;
   street: string;
-  suburb: string;
+  county: string;
   city: string;
   postcode: string;
+  wards: string;
 }

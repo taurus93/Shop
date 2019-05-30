@@ -44,9 +44,10 @@ export class BodyComponent implements OnInit {
       password: '',
       profile: '',
       street: '',
-      suburb: '',
+      county: '',
       city: '',
-      postcode: ''
+      postcode: '',
+      wards: ''
     };
   }
 
