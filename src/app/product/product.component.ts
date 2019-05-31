@@ -67,7 +67,8 @@ export class ProductComponent implements OnInit {
         userEmail: this.currentUser.userEmail,
         quantity: 0,
         totalPrice: 0,
-        status: ''
+        status: '',
+        receiverCode: ''
       };
     } else {
       this.orderProduct = {
@@ -89,7 +90,8 @@ export class ProductComponent implements OnInit {
         userEmail: '',
         quantity: 0,
         totalPrice: 0,
-        status: ''
+        status: '',
+        receiverCode: ''
       };
     }
     this.getProduct();

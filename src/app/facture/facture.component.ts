@@ -5,6 +5,7 @@ import {User} from '../model/User';
 import {Facture} from '../model/Facture';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthenticationService} from '../service/authentication.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-facture',
@@ -19,7 +20,7 @@ export class FactureComponent implements OnInit {
   currentUserSubscription: Subscription;
   facture: Facture;
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService, private router: Router) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
@@ -33,7 +34,8 @@ export class FactureComponent implements OnInit {
         userEmail: this.currentUser.userEmail,
         quantity: 0,
         totalPrice: 0,
-        status: ''
+        status: '',
+        receiverCode: ''
       };
     }
   }
@@ -42,6 +44,10 @@ export class FactureComponent implements OnInit {
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
     return this.http.get<Facture[]>(this.ROOT_URL + 'facture/getFactureByUserEmail?userEmail=' + this.currentUser.userEmail, {headers});
+  }
+
+  redirectToPayment(post) {
+    this.router.navigateByUrl('/payment/'+post.factureCode);
   }
 
 

@@ -26,8 +26,49 @@
   <!-- Tab panes -->
   <div class="tab-content">
     <div id="choThanhToan" class="container tab-pane active"><br>
-      <h3>HOME</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <div class="ui-g-12 height-4 category-wrapper">
+        <div class="panel panel-default cursor-pointer" *ngFor="let post of factures | async" (click)="redirectToPayment(post)">
+          <div class="shopee-border-delivery"></div>
+          <div class="content-facture-container">
+            <div class="panel-custom">
+              <span> Địa chỉ nhận hàng</span>
+              <div class="element-content">
+                <span class="txt2" [textContent]="currentUser.userName"></span>
+              </div>
+              <div class="element-content">
+                <span class="txt2" [textContent]="currentUser.phoneNumber"></span>
+              </div>
+              <div class="element-content">
+                <span class="txt2" [textContent]="currentUser.street"></span>
+                <span class="txt2">, </span>
+                <span class="txt2" [textContent]="currentUser.suburb"></span>
+                <span class="txt2">, </span>
+                <span class="txt2" [textContent]="currentUser.city"></span>
+              </div>
+            </div>
+            <div class="panel-custom">
+              <div class="element-content">
+                <span class="txt2">Mã đơn hàng:      </span>
+                <span class="txt2" [textContent]=post.factureCode></span>
+              </div>
+              <div class="element-content">
+                <span class="txt2">Số lượng:         </span>
+                <span class="txt2" [textContent]=post.quantity></span>
+              </div>
+              <div class="element-content">
+                <span class="txt2">Tổng số tiền:         </span>
+                <span class="txt2" [textContent]=post.totalPrice></span>
+                <span class="txt2"> đ</span>
+              </div>
+            </div>
+            <div class="panel-custom">
+              <div class="element-content">
+                <span class="txt2" [textContent]=post.status></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="choLayHang" class="container tab-pane fade"><br>
       <h3>Menu 1</h3>
@@ -46,48 +87,6 @@
       <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
     </div>
   </div>
-  <div class="ui-g-12 height-4 category-wrapper">
-    <div class="panel panel-default" *ngFor="let post of factures | async">
-      <div class="shopee-border-delivery"></div>
-      <div class="content-facture-container">
-        <div class="panel-custom">
-          <span> Địa chỉ nhận hàng</span>
-          <div class="element-content">
-            <span class="txt2" [textContent]="currentUser.userName"></span>
-          </div>
-          <div class="element-content">
-            <span class="txt2" [textContent]="currentUser.phoneNumber"></span>
-          </div>
-          <div class="element-content">
-            <span class="txt2" [textContent]="currentUser.street"></span>
-            <span class="txt2">, </span>
-            <span class="txt2" [textContent]="currentUser.suburb"></span>
-            <span class="txt2">, </span>
-            <span class="txt2" [textContent]="currentUser.city"></span>
-          </div>
-        </div>
-        <div class="panel-custom">
-          <div class="element-content">
-            <span class="txt2">Mã đơn hàng:      </span>
-            <span class="txt2" [textContent]=post.factureCode></span>
-          </div>
-          <div class="element-content">
-            <span class="txt2">Số lượng:         </span>
-            <span class="txt2" [textContent]=post.quantity></span>
-          </div>
-          <div class="element-content">
-            <span class="txt2">Tổng số tiền:         </span>
-            <span class="txt2" [textContent]=post.totalPrice></span>
-            <span class="txt2"> đ</span>
-          </div>
-        </div>
-        <div class="panel-custom">
-          <div class="element-content">
-            <span class="txt2" [textContent]=post.status></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 </div>
 <app-footer></app-footer>

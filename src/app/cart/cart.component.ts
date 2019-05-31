@@ -48,7 +48,8 @@ export class CartComponent implements OnInit {
         userEmail: this.currentUser.userEmail,
         quantity: this.numberOfProduct,
         totalPrice: this.totalPriceAll,
-        status: ''
+        status: '',
+        receiverCode: ''
       };
       this.getListOrder();
     }

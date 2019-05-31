@@ -4,4 +4,5 @@ export interface Facture {
   quantity: number;
   totalPrice: number;
   status: string;
+  receiverCode: string;
 }
