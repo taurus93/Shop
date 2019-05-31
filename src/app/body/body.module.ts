@@ -11,7 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
 import {HeaderComponent} from '../header/header.component';
 import {AppComponent} from '../app.component';
-import {FooterModule} from "../footer/footer.module";
+import {FooterModule} from '../footer/footer.module';
 
 @NgModule({
   declarations: [BodyComponent],

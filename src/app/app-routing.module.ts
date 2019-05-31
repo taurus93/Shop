@@ -12,7 +12,7 @@ import {PaymentMngComponent} from './admin/payment-mng/payment-mng.component';
 import {OrderMngComponent} from './admin/order-mng/order-mng.component';
 import {FactureMngComponent} from './admin/facture-mng/facture-mng.component';
 import {CategoryMngComponent} from './admin/category-mng/category-mng.component';
-import {PaymentComponent} from "./payment/payment.component";
+import {PaymentComponent} from './payment/payment.component';
 
 
 @NgModule({

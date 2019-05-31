@@ -19,10 +19,10 @@ import {OrderMngModule} from './admin/order-mng/order-mng.module';
 import {FactureMngModule} from './admin/facture-mng/facture-mng.module';
 import {CategoryMngModule} from './admin/category-mng/category-mng.module';
 import { FooterComponent } from './footer/footer.component';
-import {FormsModule} from "@angular/forms";
-import {FooterModule} from "./footer/footer.module";
+import {FormsModule} from '@angular/forms';
+import {FooterModule} from './footer/footer.module';
 import { PaymentComponent } from './payment/payment.component';
-import {PaymentModule} from "./payment/payment.module";
+import {PaymentModule} from './payment/payment.module';
 @NgModule({
   declarations: [
     AppComponent,
