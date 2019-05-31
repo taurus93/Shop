@@ -2,10 +2,10 @@
 <div class="container">
 
   <div>
-    <h2>List OrderDetail</h2>
+    <h2>Danh sách đơn hàng</h2>
   </div>
   <div>
-    <button type="button" class="btn btn-primary" (click)="openCreateModal()" data-toggle="modal" data-target="#modalCreate">Create</button>
+    <!--<button type="button" class="btn btn-primary" (click)="openCreateModal()" data-toggle="modal" data-target="#modalCreate">Create</button>-->
   </div>
   <!--<div class="menu">-->
   <!--<ul class="list-group" *ngFor="let item of items | async">-->
@@ -13,22 +13,21 @@
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th>orderDetailCode</th>
-      <th>orderDate</th>
-      <th>quantity</th>
-      <th>totalPrice</th>
-      <th>productID_FK</th>
-      <th>userEmail_FK</th>
-      <th>paymentID_FK</th>
+      <th>Mã hóa đơn</th>
+      <th>Email người dùng</th>
+      <th>Số lượng</th>
+      <th>Tổng tiền</th>
+      <th>Trạng thái</th>
+      <th>Mã địa chỉ nhận</th>
     </tr>
     </thead>
     <tbody class="table" *ngFor="let item of items | async">
     <tr class="cursor_poiter" (click)="select(item)" data-toggle="modal" data-target="#modalEdit">
       <td>
-        <span class="txt2 truncate" [textContent]=item.orderDetailCode></span>
+        <span class="txt2 truncate" [textContent]=item.factureCode></span>
       </td>
       <td>
-        <span class="txt2 truncate" [textContent]=item.orderDate></span>
+        <span class="txt2 truncate" [textContent]=item.userEmail></span>
       </td>
       <td>
         <span class="txt2 truncate" [textContent]=item.quantity></span>
@@ -37,15 +36,16 @@
         <span class="txt2 truncate" [textContent]=item.totalPrice></span>
       </td>
       <td>
-        <span class="txt2 truncate" [textContent]=item.productID_FK></span>
+        <span class="txt2 truncate" *ngIf="item.status == 'waitForPay'">Chờ Thanh toán</span>
+        <span class="txt2 truncate" *ngIf="item.status == 'waitForReceive'">Chờ giao hàng</span>
+        <span class="txt2 truncate" *ngIf="item.status == 'delivery'">Đang giao hàng</span>
+        <span class="txt2 truncate" *ngIf="item.status == 'delivered'">Đã giao hàng</span>
+        <span class="txt2 truncate" *ngIf="item.status == 'cancel'">Hủy</span>
       </td>
       <td>
-        <span class="txt2 truncate" [textContent]=item.userEmail_FK></span>
+        <span class="txt2 truncate" [textContent]=item.receiverCode></span>
       </td>
-      <td>
-        <span class="txt2 truncate" [textContent]=item.paymentID_FK></span>
-      </td>
-      <button type="button" class="btn btn-danger float-right" (click)="delete(item);$event.stopPropagation()">delete</button>
+      <!--<button type="button" class="btn btn-danger float-right" (click)="delete(item);$event.stopPropagation()">delete</button>-->
     </tr>
     </tbody>
   </table>
@@ -59,7 +59,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Edit here</h4>
+          <h4 class="modal-title w-100 font-weight-bold">Sửa</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -68,51 +68,55 @@
           <div class="row">
             <form class="form-custom" [formGroup]="form" (ngSubmit)="onSubmit()">
               <div class="form-group">
-                <label>OrderDetail Code</label>
-                <input type="text" formControlName="orderDetailCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.orderDetailCode.errors }" />
-                <div *ngIf="submitted && f.orderDetailCode.errors" class="invalid-feedback">
-                  <div *ngIf="f.orderDetailCode.errors.required">First Name is required</div>
+                <label>Mã hóa đơn</label>
+                <input type="text" disabled formControlName="factureCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.factureCode.errors }" />
+                <div *ngIf="submitted && f.factureCode.errors" class="invalid-feedback">
+                  <div *ngIf="f.factureCode.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>OrderDetail Date</label>
-                <input type="text" formControlName="orderDate" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.orderDate.errors }" />
-                <div *ngIf="submitted && f.orderDate.errors" class="invalid-feedback">
-                  <div *ngIf="f.orderDate.errors.required">userEmail is required</div>
-                  <div *ngIf="f.orderDate.errors.orderDate">userEmail must be a valid userEmail address</div>
+                <label>Email người dùng</label>
+                <input type="text" disabled formControlName="userEmail" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.userEmail.errors }" />
+                <div *ngIf="submitted && f.userEmail.errors" class="invalid-feedback">
+                  <div *ngIf="f.userEmail.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Quantity</label>
-                <input type="text" formControlName="quantity" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }" />
+                <label>Số lượng</label>
+                <input type="text" disabled formControlName="quantity" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }" />
                 <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
-                  <div *ngIf="f.quantity.errors.required">userEmail is required</div>
-                  <div *ngIf="f.quantity.errors.quantity">userEmail must be a valid userEmail address</div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label>productID_FK</label>
-                <input type="text" formControlName="productID_FK" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.productID_FK.errors }" />
-                <div *ngIf="submitted && f.productID_FK.errors" class="invalid-feedback">
-                  <div *ngIf="f.productID_FK.errors.required">userEmail is required</div>
-                  <div *ngIf="f.productID_FK.errors.productID_FK">userEmail must be a valid userEmail address</div>
+                  <div *ngIf="f.quantity.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>userEmail_FK</label>
-                <input type="text" formControlName="userEmail_FK" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.userEmail_FK.errors }" />
-                <div *ngIf="submitted && f.userEmail_FK.errors" class="invalid-feedback">
-                  <div *ngIf="f.userEmail_FK.errors.required">userEmail is required</div>
-                  <div *ngIf="f.userEmail_FK.errors.userEmail_FK">userEmail must be a valid userEmail address</div>
+                <label>Tổng tiền</label>
+                <input type="text" disabled formControlName="totalPrice" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.totalPrice.errors }" />
+                <div *ngIf="submitted && f.totalPrice.errors" class="invalid-feedback">
+                  <div *ngIf="f.totalPrice.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>paymentID_FK</label>
-                <input type="text" formControlName="paymentID_FK" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.paymentID_FK.errors }" />
-                <div *ngIf="submitted && f.paymentID_FK.errors" class="invalid-feedback">
-                  <div *ngIf="f.paymentID_FK.errors.required">userEmail is required</div>
-                  <div *ngIf="f.paymentID_FK.errors.paymentID_FK">userEmail must be a valid userEmail address</div>
+                <label>Trạng thái</label>
+                <!--<input type="text" formControlName="status" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.status.errors }" />-->
+                <select formControlName="status" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
+                  <option value="waitForPay">Chờ Thanh toán</option>
+                  <option value="waitForReceive">Chờ giao hàng</option>
+                  <option value="delivery">Đang giao hàng</option>
+                  <option value="delivered">Đã giao hàng</option>
+                  <option value="cancel">Hủy</option>
+                </select>
+                <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                  <div *ngIf="f.status.errors.required">Trường này không được trống</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Mã địa chỉ nhận</label>
+                <!--<input type="text" formControlName="receiverCode" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.receiverCode.errors }" />-->
+                <select formControlName="receiverCode" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
+                  <option value="waitForPay" *ngFor="let item of listReceiver | async">{{item.receiverCode}}</option>
+                </select>
+                <div *ngIf="submitted && f.receiverCode.errors" class="invalid-feedback">
+                  <div *ngIf="f.receiverCode.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
@@ -132,7 +136,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Edit here</h4>
+          <h4 class="modal-title w-100 font-weight-bold">Thêm mới</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -141,51 +145,45 @@
           <div class="row">
             <form class="form-custom" [formGroup]="formCreate" (ngSubmit)="onSubmitCreate()">
               <div class="form-group">
-                <label>OrderDetail Code</label>
-                <input type="text" formControlName="orderDetailCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.orderDetailCode.errors }" />
-                <div *ngIf="submitted && f.orderDetailCode.errors" class="invalid-feedback">
-                  <div *ngIf="f.orderDetailCode.errors.required">First Name is required</div>
+                <label>Mã hóa đơn</label>
+                <input type="text" formControlName="factureCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && fCreate.factureCode.errors }" />
+                <div *ngIf="submitted && fCreate.factureCode.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.factureCode.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>OrderDetail Date</label>
-                <input type="text" formControlName="orderDate" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.orderDate.errors }" />
-                <div *ngIf="submitted && f.orderDate.errors" class="invalid-feedback">
-                  <div *ngIf="f.orderDate.errors.required">userEmail is required</div>
-                  <div *ngIf="f.orderDate.errors.orderDate">userEmail must be a valid userEmail address</div>
+                <label>Email người dùng</label>
+                <input type="text" formControlName="userEmail" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && fCreate.userEmail.errors }" />
+                <div *ngIf="submitted && fCreate.userEmail.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.userEmail.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Quantity</label>
-                <input type="text" formControlName="quantity" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }" />
-                <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
-                  <div *ngIf="f.quantity.errors.required">userEmail is required</div>
-                  <div *ngIf="f.quantity.errors.quantity">userEmail must be a valid userEmail address</div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label>productID_FK</label>
-                <input type="text" formControlName="productID_FK" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.productID_FK.errors }" />
-                <div *ngIf="submitted && f.productID_FK.errors" class="invalid-feedback">
-                  <div *ngIf="f.productID_FK.errors.required">userEmail is required</div>
-                  <div *ngIf="f.productID_FK.errors.productID_FK">userEmail must be a valid userEmail address</div>
+                <label>Số lượng</label>
+                <input type="text" formControlName="quantity" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && fCreate.quantity.errors }" />
+                <div *ngIf="submitted && fCreate.quantity.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.quantity.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>userEmail_FK</label>
-                <input type="text" formControlName="userEmail_FK" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.userEmail_FK.errors }" />
-                <div *ngIf="submitted && f.userEmail_FK.errors" class="invalid-feedback">
-                  <div *ngIf="f.userEmail_FK.errors.required">userEmail is required</div>
-                  <div *ngIf="f.userEmail_FK.errors.userEmail_FK">userEmail must be a valid userEmail address</div>
+                <label>Tổn tiền</label>
+                <input type="text" formControlName="totalPrice" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && fCreate.totalPrice.errors }" />
+                <div *ngIf="submitted && fCreate.totalPrice.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.totalPrice.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">
-                <label>paymentID_FK</label>
-                <input type="text" formControlName="paymentID_FK" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.paymentID_FK.errors }" />
-                <div *ngIf="submitted && f.paymentID_FK.errors" class="invalid-feedback">
-                  <div *ngIf="f.paymentID_FK.errors.required">userEmail is required</div>
-                  <div *ngIf="f.paymentID_FK.errors.paymentID_FK">userEmail must be a valid userEmail address</div>
+                <label>Trạng thái</label>
+                <input type="text" formControlName="status" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && fCreate.status.errors }" />
+                <div *ngIf="submitted && fCreate.status.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.status.errors.required">Trường này không được trống</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Mã địa chỉ nhận</label>
+                <input type="text" formControlName="receiverCode" class="form-control" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && fCreate.receiverCode.errors }" />
+                <div *ngIf="submitted && fCreate.receiverCode.errors" class="invalid-feedback">
+                  <div *ngIf="fCreate.receiverCode.errors.required">Trường này không được trống</div>
                 </div>
               </div>
               <div class="form-group">

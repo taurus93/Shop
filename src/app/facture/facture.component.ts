@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {OrderProduct} from '../model/OrderProduct';
 import {User} from '../model/User';
 import {Facture} from '../model/Facture';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthenticationService} from '../service/authentication.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-facture',
@@ -58,9 +58,10 @@ export class FactureComponent implements OnInit {
       cancel: []
     };
 
-    const listFacture = this.http.get<Facture[]>(this.ROOT_URL + 'facture/getFactureByUserEmail?userEmail=' + this.currentUser.userEmail, {headers});
+    const listFacture = this.http.get<Facture[]>(this.ROOT_URL + 'facture/getFactureByUserEmail?userEmail='
+      + this.currentUser.userEmail, {headers});
     listFacture.forEach(facture => {
-      for(var i=0; i<facture.length; i++) {
+      for (var i = 0; i < facture.length; i++) {
         switch (facture[i].status) {
           case 'waitForPay':
             this.objectListFactureByStatus['waitForPay'].push(facture[i]);
@@ -79,17 +80,26 @@ export class FactureComponent implements OnInit {
             break;
         }
       }
-    })
+    });
     return listFacture;
   }
 
   redirectToPayment(post) {
-    this.router.navigateByUrl('/payment/'+post.factureCode);
+    this.router.navigateByUrl('/payment/' + post.factureCode);
   }
 
   cancelFacture(post) {
     const facture = post;
-    facture.status = "cancel";
+    facture.status = 'cancel';
+    this.http.post(this.ROOT_URL + 'facture/updateFacture', facture).subscribe(
+      (data: any[]) => {
+        console.log(data);
+        this.factures = this.getAllFacture();
+      });
+  }
+  activeFacture(post) {
+    const facture = post;
+    facture.status = 'waitForPay';
     this.http.post(this.ROOT_URL + 'facture/updateFacture', facture).subscribe(
       (data: any[]) => {
         console.log(data);
@@ -98,8 +108,8 @@ export class FactureComponent implements OnInit {
   }
 
 
-    // this.http.get<any[]>(this.ROOT_URL + 'orderDetail/deleteOrder?orderCode=' + orderCode, {headers}).subscribe(
-    //   (data: any[]) => {
-    //   }
-    // );
+  // this.http.get<any[]>(this.ROOT_URL + 'orderDetail/deleteOrder?orderCode=' + orderCode, {headers}).subscribe(
+  //   (data: any[]) => {
+  //   }
+  // );
 }

@@ -29,7 +29,7 @@ export class OrderMngComponent implements OnInit {
   submitted: boolean;
   readonly ROOT_URL = 'http://localhost:8007/ShopeeDao/';
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, private adminComponent: AdminComponent) {
+  constructor(private http: HttpClient, private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {

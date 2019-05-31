@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 import * as $ from 'jquery';
 
 @Component({
-  providers:[HeaderComponent],
+  providers: [HeaderComponent],
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
@@ -66,14 +66,14 @@ export class CartComponent implements OnInit {
       } else {
         this.showPayAllBtn = true;
       }
-      for (var i = 0; i < order.length; i++) {
-        if (order[i].status == 1) {
+      for (let i = 0; i < order.length; i++) {
+        if (order[i].status === 1) {
           this.totalPriceAll += order[i].totalPrice;
           this.numberOfProduct++;
           this.facture.totalPrice += order[i].totalPrice;
           this.facture.quantity++;
           this.orderList.push(order[i]);
-          var splitDes = order[i].productDescription.split('+');
+          const splitDes = order[i].productDescription.split('+');
           this.listTextDescription.set(order[i].productCode, splitDes);
         }
       }
@@ -121,14 +121,14 @@ export class CartComponent implements OnInit {
     if (this.numberOfProduct > 0) {
       this.facture.factureCode = new Date().getTime().toString();
       const obj = {
-        'facture': this.facture,
-        'orderList': this.orderList
+        facture: this.facture,
+        orderList: this.orderList
       };
       this.http.post(this.ROOT_URL + 'facture/insertFacture', JSON.stringify(obj)).subscribe(
         (data: any[]) => {
           console.log(data);
           this.orders = this.getAllOrder();
-          this.router.navigateByUrl('/payment/'+this.facture.factureCode);
+          this.router.navigateByUrl('/payment/' + this.facture.factureCode);
         });
     }
   }
@@ -146,8 +146,8 @@ export class CartComponent implements OnInit {
             this.showPayAllBtn = true;
           }
           this.getListOrder();
-          this.router.navigate(['home']);
-          this.router.navigate(['cart']);
+          this.router.navigateByUrl('/home/');
+          this.router.navigateByUrl('/cart/');
         });
       }
     );
